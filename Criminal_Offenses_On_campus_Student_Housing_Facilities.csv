@@ -1,0 +1,511 @@
+Survey year,Unitid,Institution name,OPEID,Campus ID, Campus Name,Institution Size,Murder/Non-negligent manslaughter,Negligent manslaughter,Sex offenses - Forcible,Rape,Fondling,Sex offenses - Non-forcible,Incest,Statutory rape,Robbery,Aggravated assault,Burglary,Motor vehicle theft,Arson
+2001,126182,Adams State University,00134500,1,Adams State University,7826,0,0,2,,,0,,,0,1,5,0,1
+2001,126678,Colorado College,00134700,1,Colorado College,1952,0,0,4,,,0,,,0,0,1,0,1
+2001,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,5302,0,0,2,,,1,,,0,1,3,0,0
+2001,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,6618,0,0,0,,,0,,,0,0,1,0,0
+2001,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,2109,0,0,0,,,0,,,0,0,0,0,0
+2001,126775,Colorado School of Mines,00134800,1,Main Campus,3705,0,0,0,,,0,,,0,0,1,2,0
+2001,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5606,0,0,1,,,0,,,0,1,3,0,0
+2001,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,28103,0,0,5,,,4,,,0,2,6,0,5
+2001,126863,Community College of Aurora,02276900,1,CentreTech Campus,4858,0,0,0,,,0,,,0,1,0,0,0
+2001,126979,Denver Seminary,00135200,1,Main Campus,736,0,0,0,,,0,,,0,0,5,0,0
+2001,127185,Fort Lewis College,00135300,1,Main Campus,4429,0,0,5,,,0,,,0,1,20,0,3
+2001,127273,Iliff School of Theology,00135400,1,Main Campus,312,0,0,0,,,0,,,0,0,0,0,0
+2001,127389,Lamar Community College,00135500,1,Lamar Community College,995,0,0,0,,,0,,,0,0,0,0,0
+2001,127653,Naropa University,02117500,1,Arapahoe Campus,1063,0,0,0,,,0,,,1,0,0,1,1
+2001,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),3768,0,0,0,,,0,,,0,0,0,0,0
+2001,127778,Otero Junior College,00136200,1,Main Campus,1404,0,0,0,,,0,,,0,0,0,0,0
+2001,127918,Regis University,00136300,1,Northwest Denver Campus,10069,0,0,0,,,0,,,0,0,0,0,2
+2001,127945,Rocky Mountain College of Art and Design,00764900,1,Rocky Mountain College of Art + Design,419,0,0,0,,,0,,,0,0,1,1,0
+2001,128258,Trinidad State College,00136800,1,Trinidad Campus,1979,0,0,0,,,0,,,0,0,2,0,0
+2001,126614,University of Colorado Boulder,00137000,1,Main Campus,30063,0,0,6,,,0,,,0,4,53,10,15
+2001,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,7980,0,0,0,,,0,,,0,0,2,0,1
+2001,127060,University of Denver,00137100,1,University Park Campus,9385,0,0,2,,,0,,,0,1,32,0,3
+2001,127060,University of Denver,00137100,2,Four Corners Campus,9385,0,0,0,,,0,,,0,0,7,0,0
+2001,127741,University of Northern Colorado,00134900,1,Main Campus,12301,0,0,6,,,0,,,0,0,10,0,0
+2001,128391,Western Colorado University,00137200,1,Main Campus,2308,0,0,1,,,0,,,0,2,10,0,1
+2002,126182,Adams State University,00134500,1,Adams State University,7708,0,0,0,,,1,,,0,0,2,0,0
+2002,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,1801,0,0,0,,,0,,,0,0,3,0,0
+2002,126678,Colorado College,00134700,1,Colorado College,1930,0,0,2,,,0,,,0,0,9,0,0
+2002,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,5572,0,0,0,,,0,,,0,1,20,2,0
+2002,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,6817,0,0,0,,,1,,,1,0,1,0,0
+2002,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,2052,0,0,0,,,0,,,0,0,0,0,0
+2002,126775,Colorado School of Mines,00134800,1,Main Campus,3787,0,0,1,,,0,,,0,0,6,3,0
+2002,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6167,0,0,0,,,0,,,0,0,2,0,0
+2002,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,29255,0,0,16,,,0,,,0,8,5,3,4
+2002,126863,Community College of Aurora,02276900,1,CentreTech Campus,5097,0,0,0,,,0,,,0,0,0,0,0
+2002,126979,Denver Seminary,00135200,1,Main Campus,808,0,0,0,,,0,,,0,0,0,0,0
+2002,127185,Fort Lewis College,00135300,1,Main Campus,4349,0,0,7,,,0,,,0,0,12,0,1
+2002,127273,Iliff School of Theology,00135400,1,Main Campus,333,0,0,0,,,0,,,0,0,0,0,0
+2002,127389,Lamar Community College,00135500,1,Lamar Community College,1171,0,0,0,,,0,,,0,0,0,0,0
+2002,127653,Naropa University,02117500,1,Arapahoe Campus,1120,0,0,0,,,1,,,0,0,0,0,0
+2002,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),3628,0,0,0,,,0,,,0,0,1,0,1
+2002,127778,Otero Junior College,00136200,1,Main Campus,1547,0,0,0,,,0,,,0,0,0,1,0
+2002,127918,Regis University,00136300,1,Northwest Denver Campus,11447,0,0,1,,,0,,,0,0,2,0,3
+2002,127945,Rocky Mountain College of Art and Design,00764900,1,Rocky Mountain College of Art + Design,441,0,0,0,,,0,,,0,0,1,1,0
+2002,128258,Trinidad State College,00136800,1,Trinidad Campus,2196,0,0,0,,,0,,,0,0,4,0,0
+2002,126614,University of Colorado Boulder,00137000,1,Main Campus,31415,0,0,4,,,0,,,2,5,42,0,10
+2002,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,8340,0,0,1,,,0,,,0,0,6,0,0
+2002,127060,University of Denver,00137100,1,University Park Campus,9229,0,0,2,,,0,,,1,0,36,0,1
+2002,127741,University of Northern Colorado,00134900,1,Main Campus,12434,0,0,4,,,0,,,0,0,5,0,0
+2002,128391,Western Colorado University,00137200,1,Main Campus,2330,0,0,2,,,0,,,0,3,10,0,1
+2003,126182,Adams State University,00134500,1,Adams State University,8472,0,0,0,,,1,,,0,1,2,0,1
+2003,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,1580,0,0,0,,,0,,,0,0,0,0,0
+2003,126678,Colorado College,00134700,1,Colorado College,1968,0,0,3,,,0,,,0,0,6,0,0
+2003,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,5765,0,0,1,,,0,,,0,1,8,1,0
+2003,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,6247,0,0,0,,,0,,,0,0,0,0,0
+2003,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,2242,0,0,0,,,0,,,0,0,0,0,0
+2003,126775,Colorado School of Mines,00134800,1,Main Campus,4050,0,0,0,,,0,,,0,0,0,1,0
+2003,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5835,0,0,2,,,0,,,0,1,2,0,0
+2003,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,28186,0,0,2,,,0,,,0,4,3,5,2
+2003,126979,Denver Seminary,00135200,1,Main Campus,706,0,0,0,,,0,,,0,0,0,0,0
+2003,127185,Fort Lewis College,00135300,1,Main Campus,4182,0,0,4,,,0,,,0,0,17,0,0
+2003,127273,Iliff School of Theology,00135400,1,Main Campus,346,0,0,0,,,0,,,0,0,2,0,0
+2003,127389,Lamar Community College,00135500,1,Lamar Community College,1091,0,0,0,,,0,,,0,0,0,0,0
+2003,127653,Naropa University,02117500,1,Arapahoe Campus,1423,0,0,0,,,0,,,0,0,0,0,0
+2003,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),3077,0,0,0,,,0,,,0,0,8,0,0
+2003,127778,Otero Junior College,00136200,1,Main Campus,1650,0,0,0,,,0,,,0,0,1,0,0
+2003,127918,Regis University,00136300,1,Northwest Denver Campus,11583,0,0,0,,,0,,,0,0,3,0,0
+2003,128258,Trinidad State College,00136800,1,Trinidad Campus,2022,0,0,0,,,0,,,0,0,2,0,0
+2003,126614,University of Colorado Boulder,00137000,1,Main Campus,32423,0,0,11,,,0,,,1,5,41,4,4
+2003,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,8712,0,0,2,,,0,,,0,0,0,0,0
+2003,127060,University of Denver,00137100,1,University Park Campus,9521,0,0,5,,,0,,,0,0,28,0,4
+2003,127741,University of Northern Colorado,00134900,1,Main Campus,13204,0,0,1,,,0,,,1,1,16,4,1
+2003,128391,Western Colorado University,00137200,1,Main Campus,2410,0,0,0,,,0,,,0,0,12,0,3
+2004,126182,Adams State University,00134500,1,Adams State University,8954,0,0,0,,,0,,,0,2,7,0,0
+2004,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,1680,0,0,0,,,0,,,0,0,2,0,0
+2004,126678,Colorado College,00134700,1,Colorado College,2044,0,0,5,,,0,,,0,1,5,0,0
+2004,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,6235,0,0,0,,,0,,,1,0,2,1,0
+2004,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,6361,0,0,1,,,0,,,0,1,1,0,0
+2004,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,2201,0,0,0,,,0,,,0,0,0,0,0
+2004,126775,Colorado School of Mines,00134800,1,Main Campus,4101,0,0,2,,,0,,,0,2,5,1,0
+2004,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5741,0,0,2,,,0,,,0,0,4,0,0
+2004,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,27973,0,0,2,,,0,,,0,1,11,0,1
+2004,126979,Denver Seminary,00135200,1,Main Campus,831,0,0,0,,,0,,,0,0,0,0,0
+2004,127185,Fort Lewis College,00135300,1,Main Campus,4194,0,0,2,,,0,,,0,0,20,0,0
+2004,127273,Iliff School of Theology,00135400,1,Main Campus,333,0,0,0,,,0,,,0,0,1,0,0
+2004,127389,Lamar Community College,00135500,1,Lamar Community College,1061,0,0,0,,,0,,,0,0,0,0,0
+2004,127653,Naropa University,02117500,1,Arapahoe Campus,1232,0,0,0,,,0,,,0,0,0,0,0
+2004,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2912,0,0,0,,,0,,,0,0,10,0,0
+2004,127778,Otero Junior College,00136200,1,Main Campus,1676,0,0,0,,,0,,,0,1,0,1,0
+2004,127918,Regis University,00136300,1,Northwest Denver Campus,11801,0,0,3,,,0,,,0,0,2,0,0
+2004,128258,Trinidad State College,00136800,1,Trinidad Campus,2106,0,0,0,,,0,,,0,0,2,0,0
+2004,126614,University of Colorado Boulder,00137000,1,Main Campus,32362,0,0,8,,,0,,,1,2,52,1,5
+2004,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,9039,0,0,1,,,0,,,0,2,2,0,1
+2004,127060,University of Denver,00137100,1,University Park Campus,9808,0,0,6,,,0,,,0,1,28,0,1
+2004,127741,University of Northern Colorado,00134900,1,Main Campus,13156,0,0,9,,,1,,,0,0,19,0,0
+2004,128391,Western Colorado University,00137200,1,Main Campus,2301,0,0,1,,,0,,,0,0,7,0,0
+2005,126182,Adams State University,00134500,1,Adams State University,9157,0,0,3,,,0,,,0,1,2,0,0
+2005,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2122,0,0,0,,,0,,,0,0,0,0,0
+2005,126678,Colorado College,00134700,1,Colorado College,2016,0,0,1,,,0,,,0,0,9,0,0
+2005,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,6062,0,0,3,,,0,,,0,2,11,0,0
+2005,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5682,0,0,0,,,0,,,0,1,1,0,0
+2005,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1518,0,0,0,,,0,,,0,0,4,1,0
+2005,126775,Colorado School of Mines,00134800,1,Main Campus,4318,0,0,3,,,0,,,1,2,6,4,1
+2005,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5870,0,0,1,,,0,,,0,1,5,0,0
+2005,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,27780,0,0,0,,,1,,,0,2,3,4,3
+2005,126979,Denver Seminary,00135200,1,Main Campus,851,0,0,0,,,0,,,0,0,4,0,0
+2005,127185,Fort Lewis College,00135300,1,Main Campus,3946,0,0,2,,,0,,,0,0,22,0,2
+2005,127273,Iliff School of Theology,00135400,1,Main Campus,321,0,0,0,,,0,,,0,0,0,0,0
+2005,127389,Lamar Community College,00135500,1,Lamar Community College,986,0,0,0,,,0,,,0,0,0,0,0
+2005,127653,Naropa University,02117500,1,Arapahoe Campus,1222,0,0,0,,,0,,,0,0,0,0,0
+2005,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2859,0,0,0,,,0,,,0,0,13,0,0
+2005,127778,Otero Junior College,00136200,1,Main Campus,1636,0,0,0,,,0,,,0,0,0,0,0
+2005,127918,Regis University,00136300,1,Northwest Denver Campus,11566,0,0,0,,,0,,,0,0,0,0,0
+2005,128258,Trinidad State College,00136800,1,Trinidad Campus,1831,0,0,0,,,0,,,0,0,2,0,0
+2005,126614,University of Colorado Boulder,00137000,1,Main Campus,31589,0,0,5,,,1,,,2,8,29,1,1
+2005,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,9333,0,0,0,,,0,,,0,0,2,0,0
+2005,127060,University of Denver,00137100,1,University Park Campus,10374,0,0,2,,,0,,,0,1,18,0,2
+2005,127741,University of Northern Colorado,00134900,1,Main Campus,13622,0,0,5,,,0,,,0,0,11,0,3
+2005,128391,Western Colorado University,00137200,1,Main Campus,2253,0,0,0,,,0,,,0,0,17,0,0
+2006,126182,Adams State University,00134500,1,Adams State University,8442,0,0,1,,,0,,,0,0,3,0,0
+2006,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2166,0,0,0,,,0,,,0,0,2,0,0
+2006,126678,Colorado College,00134700,1,Colorado College,1998,0,0,0,,,0,,,0,0,7,0,0
+2006,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,6211,0,0,0,,,0,,,0,3,9,0,0
+2006,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5508,0,0,1,,,0,,,0,0,0,0,0
+2006,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1338,0,0,0,,,0,,,0,0,0,0,0
+2006,126775,Colorado School of Mines,00134800,1,Main Campus,4357,0,0,0,,,0,,,0,0,4,0,1
+2006,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6205,0,0,0,,,0,,,0,0,0,0,1
+2006,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,27636,0,0,4,,,0,,,0,1,4,0,1
+2006,126979,Denver Seminary,00135200,1,Main Campus,826,0,0,0,,,0,,,0,0,4,0,0
+2006,127185,Fort Lewis College,00135300,1,Main Campus,3905,0,0,1,,,0,,,0,1,21,0,1
+2006,127273,Iliff School of Theology,00135400,1,Main Campus,317,0,0,0,,,0,,,0,0,0,0,0
+2006,127389,Lamar Community College,00135500,1,Lamar Community College,999,0,0,0,,,0,,,0,0,0,0,0
+2006,127653,Naropa University,02117500,1,Arapahoe Campus,1107,0,0,1,,,0,,,0,0,0,0,0
+2006,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2537,0,0,0,,,0,,,0,0,1,0,0
+2006,127778,Otero Junior College,00136200,1,Main Campus,1631,0,0,0,,,0,,,0,1,2,0,0
+2006,127918,Regis University,00136300,1,Northwest Denver Campus,11388,0,0,0,,,0,,,0,1,1,0,0
+2006,128258,Trinidad State College,00136800,1,Trinidad Campus,1732,0,0,0,,,0,,,2,0,1,0,0
+2006,126614,University of Colorado Boulder,00137000,1,Main Campus,31665,0,0,5,,,0,,,1,5,42,0,6
+2006,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,8647,0,0,1,,,0,,,0,0,3,0,1
+2006,127060,University of Denver,00137100,1,University Park Campus,10791,0,0,7,,,0,,,0,1,16,0,0
+2006,127741,University of Northern Colorado,00134900,1,Main Campus,13363,0,0,4,,,0,,,0,0,28,0,1
+2006,128391,Western Colorado University,00137200,1,Main Campus,2198,0,0,1,,,0,,,0,0,6,0,1
+2007,126182,Adams State University,00134500,1,Adams State University,2830,0,0,5,,,0,,,0,0,7,0,0
+2007,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2151,0,0,0,,,0,,,0,0,0,0,0
+2007,126678,Colorado College,00134700,1,Colorado College,2075,0,0,3,,,0,,,0,0,15,0,0
+2007,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,6199,0,0,1,,,0,,,0,0,2,0,0
+2007,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5206,0,0,0,,,0,,,0,0,0,0,0
+2007,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1430,0,0,0,,,0,,,0,0,0,0,0
+2007,126775,Colorado School of Mines,00134800,1,Main Campus,4560,0,0,0,,,0,,,0,0,4,0,0
+2007,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5908,0,0,1,,,0,,,0,1,3,0,1
+2007,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,27569,0,0,3,,,0,,,0,0,6,0,1
+2007,126979,Denver Seminary,00135200,1,Main Campus,858,0,0,0,,,0,,,0,0,0,0,0
+2007,127185,Fort Lewis College,00135300,1,Main Campus,3928,0,0,0,,,0,,,0,5,13,0,0
+2007,127273,Iliff School of Theology,00135400,1,Main Campus,199,0,0,0,,,0,,,0,0,1,0,0
+2007,127389,Lamar Community College,00135500,1,Lamar Community College,817,0,0,0,,,0,,,0,0,0,0,0
+2007,127653,Naropa University,02117500,1,Arapahoe Campus,1104,0,0,0,,,0,,,0,0,0,0,0
+2007,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2751,0,0,0,,,0,,,0,0,0,0,0
+2007,127778,Otero Junior College,00136200,1,Main Campus,1558,0,0,0,,,0,,,0,1,0,0,0
+2007,127918,Regis University,00136300,1,Northwest Denver Campus,11238,0,0,1,,,0,,,0,0,3,0,1
+2007,128258,Trinidad State College,00136800,1,Trinidad Campus,1760,0,0,0,,,0,,,0,1,1,0,0
+2007,126614,University of Colorado Boulder,00137000,1,Main Campus,31796,0,0,5,,,0,,,0,5,24,0,0
+2007,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,8660,0,0,3,,,0,,,0,1,3,0,0
+2007,127060,University of Denver,00137100,1,University Park Campus,11053,0,0,3,,,0,,,0,0,28,0,0
+2007,127741,University of Northern Colorado,00134900,1,Main Campus,12702,0,0,3,,,0,,,0,0,21,0,0
+2007,128391,Western Colorado University,00137200,1,Main Campus,2146,0,0,1,,,0,,,0,1,8,0,0
+2008,126182,Adams State University,00134500,1,Adams State University,2920,0,0,2,,,0,,,0,0,1,0,0
+2008,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2599,0,0,0,,,0,,,0,0,0,0,0
+2008,126678,Colorado College,00134700,1,Colorado College,2026,0,0,4,,,0,,,0,0,13,0,0
+2008,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,6262,0,0,1,,,0,,,0,0,6,0,1
+2008,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5092,0,0,0,,,0,,,0,1,0,0,0
+2008,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1383,0,0,1,,,0,,,0,1,0,0,0
+2008,126775,Colorado School of Mines,00134800,1,Main Campus,4704,0,0,0,,,0,,,0,0,2,0,1
+2008,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6759,0,0,0,,,0,,,0,0,17,0,0
+2008,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,28882,0,0,2,,,0,,,0,2,4,0,3
+2008,126979,Denver Seminary,00135200,1,Main Campus,880,0,0,0,,,0,,,0,0,0,0,0
+2008,127185,Fort Lewis College,00135300,1,Main Campus,3740,0,0,0,,,0,,,0,1,9,0,0
+2008,127273,Iliff School of Theology,00135400,1,Main Campus,194,0,0,0,,,0,,,0,0,0,0,0
+2008,127389,Lamar Community College,00135500,1,Lamar Community College,1138,0,0,0,,,0,,,0,0,0,0,0
+2008,127653,Naropa University,02117500,1,Arapahoe Campus,1075,0,0,0,,,0,,,0,0,0,0,0
+2008,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2698,0,0,0,,,0,,,0,0,0,0,0
+2008,127778,Otero Junior College,00136200,1,Main Campus,1551,0,0,0,,,0,,,0,0,0,0,0
+2008,127918,Regis University,00136300,1,Northwest Denver Campus,11040,0,0,0,,,0,,,0,0,2,0,0
+2008,128258,Trinidad State College,00136800,1,Trinidad Campus,1740,0,0,0,,,0,,,0,0,0,0,0
+2008,126614,University of Colorado Boulder,00137000,1,Main Campus,32469,0,0,6,,,0,,,1,4,31,0,5
+2008,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,9373,0,0,0,,,0,,,0,0,2,0,0
+2008,127060,University of Denver,00137100,1,University Park Campus,11328,0,0,4,,,0,,,1,1,25,0,1
+2008,127741,University of Northern Colorado,00134900,1,Main Campus,12498,0,0,3,,,0,,,0,2,54,0,2
+2008,128391,Western Colorado University,00137200,1,Main Campus,2315,0,0,0,,,0,,,0,0,0,0,0
+2009,126182,Adams State University,00134500,1,Adams State University,3121,0,0,3,,,0,,,0,0,5,0,0
+2009,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2511,0,0,0,,,0,,,0,0,8,0,0
+2009,126678,Colorado College,00134700,1,Colorado College,2032,0,0,9,,,0,,,0,0,7,0,0
+2009,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,7042,0,0,0,,,0,,,1,0,2,0,0
+2009,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5741,0,0,0,,,0,,,0,0,0,0,0
+2009,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1375,0,0,0,,,0,,,0,0,0,0,0
+2009,126775,Colorado School of Mines,00134800,1,Main Campus,5124,0,0,0,,,0,,,0,0,3,0,0
+2009,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6443,0,0,1,,,0,,,0,0,9,0,1
+2009,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,28902,0,0,3,,,0,,,0,2,7,0,5
+2009,126979,Denver Seminary,00135200,1,Main Campus,925,0,0,0,,,0,,,0,0,0,0,0
+2009,127185,Fort Lewis College,00135300,1,Main Campus,3770,0,0,2,,,0,,,0,1,8,0,3
+2009,127273,Iliff School of Theology,00135400,1,Main Campus,303,0,0,0,,,0,,,0,0,0,0,0
+2009,127389,Lamar Community College,00135500,1,Lamar Community College,1080,0,0,0,,,0,,,0,0,0,0,0
+2009,127653,Naropa University,02117500,1,Arapahoe Campus,1073,0,0,0,,,0,,,0,0,1,0,0
+2009,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2497,0,0,0,,,0,,,0,0,0,0,0
+2009,127778,Otero Junior College,00136200,1,Main Campus,1660,0,0,0,,,0,,,0,0,0,0,0
+2009,127918,Regis University,00136300,1,Northwest Denver Campus,10874,0,0,0,,,0,,,0,0,0,0,0
+2009,128258,Trinidad State College,00136800,1,Trinidad Campus,1812,0,0,0,,,0,,,0,0,1,0,0
+2009,126614,University of Colorado Boulder,00137000,1,Main Campus,33010,0,0,6,,,0,,,0,3,14,0,1
+2009,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,9733,0,0,0,,,0,,,0,0,3,0,0
+2009,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,23715,0,0,0,,,0,,,0,0,1,0,0
+2009,127060,University of Denver,00137100,1,University Park Campus,11644,0,0,1,,,0,,,0,0,10,0,1
+2009,127741,University of Northern Colorado,00134900,1,Main Campus,12711,0,0,5,,,0,,,0,1,2,0,0
+2009,128391,Western Colorado University,00137200,1,Main Campus,2237,0,0,1,,,0,,,0,1,9,0,0
+2010,126182,Adams State University,00134500,1,Adams State University,3237,0,0,1,,,0,,,0,0,0,0,0
+2010,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,2733,0,0,0,,,0,,,0,0,0,0,0
+2010,126678,Colorado College,00134700,1,Colorado College,2091,0,0,10,,,0,,,0,0,6,0,1
+2010,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,8130,0,0,0,,,0,,,0,2,8,0,0
+2010,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,6088,0,0,0,,,0,,,0,0,0,0,0
+2010,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1450,0,0,0,,,0,,,0,0,0,0,0
+2010,126775,Colorado School of Mines,00134800,1,Main Campus,5287,0,0,0,,,0,,,0,0,1,0,0
+2010,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7379,0,0,1,,,0,,,0,1,14,0,0
+2010,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,30155,0,0,2,,,0,,,0,0,20,0,3
+2010,126979,Denver Seminary,00135200,1,Main Campus,993,0,0,0,,,0,,,0,0,0,0,0
+2010,127185,Fort Lewis College,00135300,1,Main Campus,3853,0,0,1,,,0,,,0,0,14,0,2
+2010,127273,Iliff School of Theology,00135400,1,Main Campus,336,0,0,0,,,0,,,0,0,0,0,0
+2010,127389,Lamar Community College,00135500,1,Lamar Community College,1051,0,0,0,,,0,,,0,0,0,0,0
+2010,127653,Naropa University,02117500,1,Arapahoe Campus,1065,0,0,0,,,0,,,0,0,1,0,0
+2010,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2214,0,0,0,,,0,,,0,0,1,0,0
+2010,127778,Otero Junior College,00136200,1,Main Campus,1823,0,0,0,,,0,,,0,5,0,0,0
+2010,127918,Regis University,00136300,1,Northwest Denver Campus,11069,0,0,0,,,0,,,0,0,1,0,0
+2010,128258,Trinidad State College,00136800,1,Trinidad Campus,1916,0,0,0,,,0,,,0,0,2,0,0
+2010,126614,University of Colorado Boulder,00137000,1,Main Campus,32697,0,0,2,,,0,,,0,1,15,0,1
+2010,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,9745,0,0,1,,,0,,,0,0,0,0,0
+2010,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,24108,0,0,1,,,0,,,1,0,0,0,0
+2010,127060,University of Denver,00137100,1,University Park Campus,11842,0,0,4,,,0,,,0,0,8,0,1
+2010,127741,University of Northern Colorado,00134900,1,Main Campus,13030,0,0,1,,,0,,,0,0,4,0,0
+2010,128391,Western Colorado University,00137200,1,Main Campus,2325,0,0,0,,,0,,,0,0,2,0,0
+2011,126182,Adams State University,00134500,1,Adams State University,3302,0,0,2,,,0,,,0,0,2,0,1
+2011,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,3490,0,0,0,,,0,,,0,0,0,0,0
+2011,126678,Colorado College,00134700,1,Colorado College,2043,0,0,10,,,0,,,0,0,3,0,0
+2011,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9005,0,0,4,,,0,,,0,0,12,0,0
+2011,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5823,0,0,0,,,0,,,0,0,0,0,0
+2011,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1291,0,0,0,,,0,,,0,2,0,0,0
+2011,126775,Colorado School of Mines,00134800,1,Main Campus,5524,0,0,0,,,0,,,0,0,1,0,0
+2011,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7174,0,0,3,,,0,,,0,1,13,0,0
+2011,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,30467,0,0,3,,,0,,,0,0,9,0,0
+2011,126979,Denver Seminary,00135200,1,Main Campus,1018,0,0,0,,,0,,,0,0,0,0,0
+2011,127185,Fort Lewis College,00135300,1,Main Campus,3841,0,0,3,,,0,,,0,0,7,0,3
+2011,127273,Iliff School of Theology,00135400,1,Main Campus,361,0,0,0,,,0,,,0,0,0,0,0
+2011,127389,Lamar Community College,00135500,1,Lamar Community College,935,0,0,0,,,0,,,0,0,0,0,0
+2011,127653,Naropa University,02117500,1,Arapahoe Campus,1090,0,0,0,,,0,,,0,0,0,0,0
+2011,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),2154,0,0,1,,,0,,,0,0,0,0,0
+2011,127778,Otero Junior College,00136200,1,Main Campus,1546,0,0,0,,,0,,,0,0,0,0,0
+2011,127918,Regis University,00136300,1,Northwest Denver Campus,11253,0,0,0,,,0,,,0,0,3,0,0
+2011,128258,Trinidad State College,00136800,1,Trinidad Campus,1839,0,0,0,,,0,,,0,0,2,0,0
+2011,126614,University of Colorado Boulder,00137000,1,Main Campus,32558,0,0,6,,,0,,,0,4,12,0,1
+2011,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,10183,0,0,1,,,0,,,0,0,2,0,0
+2011,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,22495,0,0,1,,,0,,,0,0,0,0,0
+2011,127060,University of Denver,00137100,1,University Park Campus,11797,0,0,2,,,0,,,0,0,5,0,1
+2011,127741,University of Northern Colorado,00134900,1,Main Campus,13038,0,0,2,,,0,,,0,2,3,0,0
+2011,128391,Western Colorado University,00137200,1,Main Campus,2242,0,0,1,,,0,,,0,0,2,0,0
+2012,126182,Adams State University,00134500,1,Adams State University,3290,0,0,0,,,0,,,0,0,6,0,1
+2012,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,3917,0,0,0,,,0,,,0,0,0,0,0
+2012,126678,Colorado College,00134700,1,Colorado College,2022,0,0,6,,,0,,,0,0,10,0,0
+2012,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9482,0,0,2,,,0,,,0,2,13,0,0
+2012,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5847,0,0,0,,,0,,,0,0,0,0,0
+2012,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1158,0,0,0,,,0,,,0,2,1,0,0
+2012,126775,Colorado School of Mines,00134800,1,Main Campus,5721,0,0,2,,,0,,,0,0,1,0,0
+2012,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6805,0,0,4,,,0,,,0,0,8,0,0
+2012,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,30659,0,0,10,,,0,,,0,0,13,0,6
+2012,126979,Denver Seminary,00135200,1,Main Campus,985,0,0,0,,,0,,,0,0,0,0,0
+2012,127185,Fort Lewis College,00135300,1,Main Campus,3883,0,0,1,,,0,,,0,0,9,0,0
+2012,127273,Iliff School of Theology,00135400,1,Main Campus,343,0,0,1,,,0,,,0,0,1,0,0
+2012,127389,Lamar Community College,00135500,1,Lamar Community College,916,0,0,0,,,0,,,0,0,0,0,0
+2012,127653,Naropa University,02117500,1,Arapahoe Campus,1019,0,0,1,,,0,,,0,0,0,0,0
+2012,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1971,0,0,1,,,0,,,0,0,0,0,0
+2012,127778,Otero Junior College,00136200,1,Main Campus,1456,0,0,0,,,0,,,0,0,5,0,0
+2012,127918,Regis University,00136300,1,Northwest Denver Campus,10683,0,0,0,,,0,,,0,0,1,0,0
+2012,128258,Trinidad State College,00136800,1,Trinidad Campus,1691,0,0,0,,,0,,,0,0,4,0,0
+2012,126614,University of Colorado Boulder,00137000,1,Main Campus,31945,0,0,7,,,0,,,0,0,15,0,0
+2012,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,10612,0,0,0,,,0,,,0,0,0,0,0
+2012,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,22396,0,0,0,,,0,,,1,0,0,0,0
+2012,127060,University of Denver,00137100,1,University Park Campus,11656,0,0,5,,,0,,,0,0,5,0,0
+2012,127741,University of Northern Colorado,00134900,1,Main Campus,13070,0,0,4,,,0,,,0,0,9,0,0
+2012,128391,Western Colorado University,00137200,1,Main Campus,2301,0,0,0,,,0,,,0,0,1,0,0
+2013,126182,Adams State University,00134500,1,Adams State University,3211,0,0,4,,,0,,,0,1,1,0,0
+2013,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,5368,0,0,0,,,0,,,0,0,0,0,0
+2013,126678,Colorado College,00134700,1,Colorado College,2061,0,0,11,,,0,,,0,0,6,0,1
+2013,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9676,0,0,2,,,0,,,1,2,4,0,0
+2013,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5893,0,0,0,,,0,,,0,0,1,0,0
+2013,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1138,0,0,1,,,0,,,0,0,0,0,0
+2013,126775,Colorado School of Mines,00134800,1,Main Campus,5790,0,0,0,,,0,,,0,0,3,0,0
+2013,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7089,0,0,3,,,0,,,0,0,4,0,1
+2013,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,31186,0,0,16,,,0,,,0,0,6,0,6
+2013,126979,Denver Seminary,00135200,1,Main Campus,990,0,0,0,,,0,,,0,0,0,0,0
+2013,127185,Fort Lewis College,00135300,1,Main Campus,4021,0,0,3,,,0,,,0,0,4,0,0
+2013,127273,Iliff School of Theology,00135400,1,Main Campus,349,0,0,0,,,0,,,0,0,0,0,0
+2013,127389,Lamar Community College,00135500,1,Lamar Community College,902,0,0,0,,,0,,,0,0,0,0,0
+2013,127653,Naropa University,02117500,1,Arapahoe Campus,992,0,0,0,,,0,,,0,0,0,0,0
+2013,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1962,0,0,0,,,0,,,0,0,0,0,0
+2013,127778,Otero Junior College,00136200,1,Main Campus,1449,0,0,0,,,0,,,0,0,1,0,0
+2013,127918,Regis University,00136300,1,Northwest Denver Campus,9722,0,0,0,,,0,,,0,0,6,0,0
+2013,128258,Trinidad State College,00136800,1,Trinidad Campus,1791,0,0,0,,,0,,,0,2,3,0,0
+2013,126614,University of Colorado Boulder,00137000,1,Main Campus,32017,0,0,5,,,0,,,0,0,13,0,1
+2013,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,11321,0,0,2,,,0,,,0,0,6,0,0
+2013,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,22206,0,0,2,,,0,,,0,1,0,0,0
+2013,127060,University of Denver,00137100,1,University Park Campus,11778,0,0,7,,,0,,,0,0,8,0,1
+2013,127741,University of Northern Colorado,00134900,1,Main Campus,12710,0,0,5,,,0,,,0,1,2,0,0
+2013,128391,Western Colorado University,00137200,1,Main Campus,2404,0,0,0,,,0,,,0,0,0,0,0
+2014,126182,Adams State University,00134500,1,Adams State University,3154,0,0,,0,0,,0,0,0,0,3,0,0
+2014,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,5787,0,0,,0,0,,0,0,0,0,0,0,0
+2014,126678,Colorado College,00134700,1,Colorado College,2067,0,0,,9,2,,0,0,0,1,6,0,0
+2014,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9116,0,0,,8,0,,0,0,0,2,9,0,0
+2014,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5705,0,0,,1,0,,0,0,0,2,0,0,0
+2014,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1145,0,0,,1,0,,0,0,0,0,0,0,0
+2014,126775,Colorado School of Mines,00134800,1,Main Campus,5962,0,0,,1,0,,0,0,0,0,1,0,0
+2014,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7256,0,0,,6,0,,0,0,0,0,6,0,0
+2014,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,31354,0,0,,16,9,,0,0,0,0,5,0,5
+2014,126979,Denver Seminary,00135200,1,Main Campus,944,0,0,,0,0,,0,0,0,0,0,0,0
+2014,127185,Fort Lewis College,00135300,1,Main Campus,3791,0,0,,0,0,,0,0,0,0,3,0,0
+2014,127273,Iliff School of Theology,00135400,1,Main Campus,333,0,0,,0,0,,0,0,0,0,0,0,0
+2014,127389,Lamar Community College,00135500,1,Lamar Community College,839,0,0,,0,0,,0,0,0,0,0,0,0
+2014,127653,Naropa University,02117500,1,Arapahoe Campus,996,0,0,,0,0,,0,0,0,0,0,0,0
+2014,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1776,0,0,,1,0,,0,0,0,0,0,0,0
+2014,127778,Otero Junior College,00136200,1,Main Campus,1434,0,0,,0,0,,0,0,0,0,0,0,0
+2014,127918,Regis University,00136300,1,Northwest Denver Campus,9208,0,0,,3,0,,0,0,0,0,0,0,0
+2014,128258,Trinidad State College,00136800,1,Trinidad Campus,1783,0,0,,0,0,,0,0,0,5,0,0,0
+2014,126614,University of Colorado Boulder,00137000,1,Main Campus,32432,0,0,,9,0,,0,0,0,1,13,0,0
+2014,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,11761,0,0,,0,0,,0,0,0,0,2,0,1
+2014,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,22791,0,0,,1,0,,0,0,0,0,0,0,0
+2014,127060,University of Denver,00137100,1,University Park Campus,11809,0,0,,12,2,,0,0,0,0,1,0,1
+2014,127741,University of Northern Colorado,00134900,1,Main Campus,12050,0,0,,4,3,,0,0,0,0,2,0,0
+2014,128391,Western Colorado University,00137200,1,Main Campus,2584,0,0,,0,0,,0,0,0,0,0,0,0
+2015,126182,Adams State University,00134500,1,Adams State University,3404,0,0,,1,0,,0,0,0,0,4,0,0
+2015,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,6879,0,0,,0,0,,0,0,0,0,0,0,0
+2015,126678,Colorado College,00134700,1,Colorado College,2131,0,0,,6,8,,0,0,0,0,0,0,0
+2015,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9448,0,0,,5,1,,0,0,0,0,3,0,0
+2015,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5806,0,0,,0,0,,0,0,0,2,1,0,0
+2015,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1178,0,0,,0,0,,0,0,0,0,0,0,0
+2015,126775,Colorado School of Mines,00134800,1,Main Campus,6054,0,0,,1,0,,0,0,0,0,1,0,0
+2015,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7563,0,0,,3,1,,0,0,0,0,1,0,0
+2015,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,30614,0,0,,11,11,,0,0,0,0,1,0,5
+2015,126979,Denver Seminary,00135200,1,Main Campus,929,0,0,,0,0,,0,0,0,0,0,0,0
+2015,127185,Fort Lewis College,00135300,1,Main Campus,3707,0,0,,1,0,,0,0,0,0,4,0,0
+2015,127273,Iliff School of Theology,00135400,1,Main Campus,340,0,0,,0,0,,0,0,0,0,0,0,0
+2015,127389,Lamar Community College,00135500,1,Lamar Community College,777,0,0,,0,0,,0,0,0,0,2,0,0
+2015,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1498,0,0,,2,0,,0,0,0,0,2,0,0
+2015,127778,Otero Junior College,00136200,1,Main Campus,1410,0,0,,0,0,,0,0,0,2,0,0,0
+2015,127918,Regis University,00136300,1,Northwest Denver Campus,8725,0,0,,1,0,,0,0,0,0,5,0,0
+2015,128258,Trinidad State College,00136800,1,Trinidad Campus,1660,0,0,,2,0,,0,0,1,0,4,0,0
+2015,126614,University of Colorado Boulder,00137000,1,Main Campus,33056,0,0,,11,8,,0,0,0,3,7,0,1
+2015,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,11988,0,0,,1,1,,0,0,0,2,0,0,0
+2015,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,23671,0,0,,0,0,,0,0,0,0,0,0,0
+2015,127060,University of Denver,00137100,1,University Park Campus,11797,0,0,,6,3,,0,0,0,2,4,0,0
+2015,127741,University of Northern Colorado,00134900,1,Main Campus,12216,0,0,,6,3,,0,0,0,0,3,0,1
+2015,128391,Western Colorado University,00137200,1,Main Campus,2722,0,0,,5,0,,0,0,0,0,2,0,0
+2016,126182,Adams State University,00134500,1,Adams State University,3370,0,0,,1,0,,0,0,0,0,4,0,0
+2016,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,7032,0,0,,0,0,,0,0,0,0,1,0,0
+2016,126678,Colorado College,00134700,1,Colorado College,2114,0,0,,12,0,,0,0,0,0,0,0,0
+2016,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9735,0,0,,3,1,,0,0,0,0,1,0,0
+2016,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5806,0,0,,0,0,,0,0,0,0,4,0,0
+2016,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1098,0,0,,0,0,,0,0,0,0,0,0,0
+2016,126748,Colorado Northwestern Community College,00135900,2,Colorado Northwestern Community College-Craig Campus,1098,0,0,,0,0,,0,0,0,0,0,0,0
+2016,126775,Colorado School of Mines,00134800,1,Main Campus,6069,0,0,,8,0,,0,0,0,0,1,0,0
+2016,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7802,0,0,,3,1,,0,0,0,0,0,0,0
+2016,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,31856,0,0,,13,5,,0,0,0,0,9,0,5
+2016,126979,Denver Seminary,00135200,1,Main Campus,901,0,0,,0,0,,0,0,0,0,0,0,0
+2016,127185,Fort Lewis College,00135300,1,Main Campus,3600,0,0,,3,2,,0,0,0,0,14,0,1
+2016,127273,Iliff School of Theology,00135400,1,Main Campus,311,0,0,,0,0,,0,0,0,0,0,0,0
+2016,127389,Lamar Community College,00135500,1,Lamar Community College,791,0,0,,0,0,,0,0,0,0,0,0,0
+2016,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1645,0,0,,1,0,,0,0,0,0,1,0,0
+2016,127778,Otero Junior College,00136200,1,Main Campus,1464,0,0,,2,0,,0,0,0,4,2,0,0
+2016,127918,Regis University,00136300,1,Northwest Denver Campus,8368,0,0,,4,3,,0,0,0,0,5,0,0
+2016,128258,Trinidad State College,00136800,1,Trinidad Campus,1654,0,0,,0,0,,0,0,0,0,1,0,0
+2016,126614,University of Colorado Boulder,00137000,1,Main Campus,33977,0,0,,10,3,,0,0,0,1,9,0,2
+2016,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,12559,0,0,,6,0,,0,0,0,2,1,0,0
+2016,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,23960,0,0,,1,0,,0,0,0,0,0,0,0
+2016,127060,University of Denver,00137100,1,University Park Campus,11614,0,0,,14,3,,0,0,0,0,3,0,0
+2016,127741,University of Northern Colorado,00134900,1,Main Campus,13087,0,0,,9,2,,0,0,0,0,0,0,0
+2016,128391,Western Colorado University,00137200,1,Main Campus,2908,0,0,,1,0,,0,0,0,0,2,0,0
+2017,126182,Adams State University,00134500,1,Adams State University,3314,0,0,,1,1,,0,0,0,0,1,0,0
+2017,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,7398,0,0,,0,0,,0,0,0,0,2,0,0
+2017,126678,Colorado College,00134700,1,Colorado College,2118,0,0,,5,5,,0,0,0,0,1,0,0
+2017,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9591,0,0,,4,0,,0,0,0,0,2,0,0
+2017,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5934,0,0,,0,1,,0,0,0,0,0,0,0
+2017,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1201,0,0,,0,0,,0,0,0,0,1,0,0
+2017,126748,Colorado Northwestern Community College,00135900,2,Colorado Northwestern Community College-Craig Campus,1201,0,0,,0,0,,0,0,1,0,0,0,0
+2017,126775,Colorado School of Mines,00134800,1,Main Campus,6209,0,0,,3,2,,0,0,0,0,2,0,0
+2017,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6639,0,0,,5,1,,0,0,0,0,0,0,0
+2017,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,33083,0,0,,13,9,,0,0,0,1,3,0,5
+2017,126979,Denver Seminary,00135200,1,Main Campus,908,0,0,,0,0,,0,0,0,0,0,0,0
+2017,127185,Fort Lewis College,00135300,1,Main Campus,3332,0,0,,4,0,,0,0,0,0,4,0,0
+2017,127273,Iliff School of Theology,00135400,1,Main Campus,286,0,0,,0,0,,0,0,0,0,0,0,0
+2017,127389,Lamar Community College,00135500,1,Lamar Community College,811,0,0,,0,0,,0,0,0,0,1,0,0
+2017,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1547,0,0,,1,0,,0,0,0,1,1,0,0
+2017,127778,Otero Junior College,00136200,1,Main Campus,1330,0,0,,1,0,,0,0,0,2,0,0,0
+2017,127918,Regis University,00136300,1,Northwest Denver Campus,8341,0,0,,3,1,,0,0,0,0,4,0,0
+2017,480790,Rocky Vista University,04218900,1,Rocky Vista University College of Osteopathic Medicine,779,0,0,,0,0,,0,0,0,0,0,0,0
+2017,128258,Trinidad State College,00136800,1,Trinidad Campus,1663,0,0,,0,1,,0,0,0,0,0,0,0
+2017,128258,Trinidad State College,00136800,2,Valley Campus,1663,0,0,,1,1,,0,0,0,0,0,0,0
+2017,126614,University of Colorado Boulder,00137000,1,Main Campus,35338,0,0,,9,3,,0,0,0,0,2,0,2
+2017,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,12932,0,0,,1,3,,0,0,0,1,2,0,0
+2017,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,24839,0,0,,2,0,,0,0,0,0,3,0,0
+2017,127060,University of Denver,00137100,1,University Park Campus,11434,0,0,,12,5,,0,0,0,0,4,0,0
+2017,127741,University of Northern Colorado,00134900,1,Main Campus,13399,0,0,,8,3,,0,0,0,0,1,0,0
+2017,128391,Western Colorado University,00137200,1,Main Campus,2814,0,0,,1,1,,0,0,0,0,0,0,0
+2018,126182,Adams State University,00134500,1,Adams State University,3110,0,0,,0,0,,0,0,0,1,3,0,0
+2018,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,7625,0,0,,0,0,,0,0,0,0,1,0,0
+2018,126678,Colorado College,00134700,1,Colorado College,2144,0,0,,3,0,,0,0,0,0,0,0,0
+2018,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9492,0,0,,5,1,,0,0,0,0,1,0,0
+2018,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5688,0,0,,0,0,,0,0,0,0,0,0,0
+2018,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1154,0,0,,0,0,,0,0,0,0,1,0,0
+2018,126748,Colorado Northwestern Community College,00135900,2,Colorado Northwestern Community College-Craig Campus,1154,0,0,,0,0,,0,0,0,0,0,0,0
+2018,126775,Colorado School of Mines,00134800,1,Main Campus,6325,0,0,,8,0,,0,0,0,0,1,0,0
+2018,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6736,0,0,,0,2,,0,0,0,0,0,0,0
+2018,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,33478,0,0,,12,9,,0,0,0,0,7,0,4
+2018,126979,Denver Seminary,00135200,1,Main Campus,885,0,0,,0,0,,0,0,0,0,0,0,0
+2018,127185,Fort Lewis College,00135300,1,Main Campus,3319,0,0,,2,1,,0,0,0,0,4,0,1
+2018,127273,Iliff School of Theology,00135400,1,Main Campus,263,0,0,,0,0,,0,0,0,0,0,0,0
+2018,127389,Lamar Community College,00135500,1,Lamar Community College,754,0,0,,0,0,,0,0,0,0,0,0,0
+2018,127653,Naropa University,02117500,1,Arapahoe Campus,953,0,0,,0,0,,0,0,0,0,0,0,0
+2018,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1492,0,0,,1,0,,0,0,0,0,0,0,0
+2018,127778,Otero Junior College,00136200,1,Main Campus,1262,0,0,,0,0,,0,0,0,2,0,0,0
+2018,127918,Regis University,00136300,1,Northwest Denver Campus,7907,0,0,,2,0,,0,0,0,1,6,0,0
+2018,480790,Rocky Vista University,04218900,2,Rocky Vista University COM-SU,952,0,0,,0,0,,0,0,0,0,0,0,0
+2018,128258,Trinidad State College,00136800,1,Trinidad Campus,1542,0,0,,0,0,,0,0,0,0,0,0,0
+2018,128258,Trinidad State College,00136800,2,Valley Campus,1542,0,0,,0,0,,0,0,0,0,3,0,0
+2018,126614,University of Colorado Boulder,00137000,1,Main Campus,36681,0,0,,14,6,,0,0,0,0,12,0,1
+2018,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,13123,0,0,,6,2,,0,0,0,0,0,0,0
+2018,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,25645,0,0,,3,2,,0,0,0,0,0,0,0
+2018,127060,University of Denver,00137100,1,University Park Campus,11952,0,0,,5,3,,0,0,0,3,2,4,0
+2018,127741,University of Northern Colorado,00134900,1,Main Campus,13437,0,0,,17,6,,0,0,0,0,1,0,0
+2018,128391,Western Colorado University,00137200,1,Main Campus,3034,0,0,,1,2,,0,0,0,0,1,0,0
+2019,126182,Adams State University,00134500,1,Adams State University,3114,0,0,,2,1,,0,0,0,0,0,0,0
+2019,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,7587,0,0,,0,0,,0,0,0,0,0,0,0
+2019,126678,Colorado College,00134700,1,Colorado College,2123,0,0,,7,1,,0,0,0,1,4,0,0
+2019,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9373,0,0,,5,1,,0,0,0,0,0,0,0
+2019,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5636,0,0,,0,1,,0,0,0,0,0,0,0
+2019,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1112,0,0,,1,0,,0,0,0,1,0,0,0
+2019,126775,Colorado School of Mines,00134800,1,Main Campus,6628,0,0,,4,0,,0,0,0,1,0,0,1
+2019,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,7081,0,0,,2,0,,0,0,0,0,1,0,0
+2019,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,33426,0,0,,9,7,,0,0,0,2,4,0,1
+2019,126979,Denver Seminary,00135200,1,Main Campus,848,0,0,,0,0,,0,0,0,0,0,0,0
+2019,127185,Fort Lewis College,00135300,1,Main Campus,3300,0,0,,4,2,,0,0,0,0,5,0,0
+2019,127273,Iliff School of Theology,00135400,1,Main Campus,227,0,0,,0,0,,0,0,0,0,0,0,0
+2019,127389,Lamar Community College,00135500,1,Lamar Community College,849,0,0,,0,0,,0,0,0,0,0,0,0
+2019,127653,Naropa University,02117500,1,Arapahoe Campus,904,0,0,,0,0,,0,0,0,0,0,0,0
+2019,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1390,0,0,,1,0,,0,0,0,0,0,0,0
+2019,127778,Otero Junior College,00136200,1,Main Campus,1279,0,0,,1,0,,0,0,0,4,0,0,0
+2019,127918,Regis University,00136300,1,Northwest Denver Campus,6908,0,0,,1,1,,0,0,0,0,2,0,0
+2019,480790,Rocky Vista University,04218900,2,Rocky Vista University COM-SU,1144,0,0,,0,0,,0,0,0,0,0,0,0
+2019,128258,Trinidad State College,00136800,1,Trinidad Campus,1621,0,0,,0,0,,0,0,0,0,0,0,0
+2019,128258,Trinidad State College,00136800,2,Valley Campus,1621,0,0,,1,0,,0,0,0,0,0,0,0
+2019,126614,University of Colorado Boulder,00137000,1,Main Campus,37883,0,0,,16,4,,0,0,0,0,11,0,0
+2019,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,12807,0,0,,6,0,,0,0,0,0,0,0,0
+2019,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,24910,0,0,,2,3,,0,0,0,0,1,0,0
+2019,127060,University of Denver,00137100,1,University Park Campus,12931,0,0,,4,5,,0,0,1,0,13,1,0
+2019,127741,University of Northern Colorado,00134900,1,Main Campus,12930,0,0,,3,4,,0,0,0,0,2,0,0
+2019,128391,Western Colorado University,00137200,1,Main Campus,3487,0,0,,1,3,,0,0,0,0,0,0,0
+2020,126182,Adams State University,00134500,1,Adams State University,3164,0,0,,3,2,,0,0,0,0,3,0,0
+2020,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,7839,0,0,,0,0,,0,0,0,0,0,0,0
+2020,126678,Colorado College,00134700,1,Colorado College,2050,0,0,,3,0,,0,0,0,0,3,0,0
+2020,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,9110,0,0,,0,3,,0,0,0,0,1,0,0
+2020,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5315,0,0,,0,0,,0,0,0,0,0,0,0
+2020,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,993,0,0,,0,0,,0,0,0,0,0,0,0
+2020,126748,Colorado Northwestern Community College,00135900,2,Colorado Northwestern Community College-Craig Campus,993,0,0,,0,0,,0,0,0,0,0,0,0
+2020,126775,Colorado School of Mines,00134800,1,Main Campus,6744,0,0,,5,1,,0,0,0,0,3,1,0
+2020,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,5925,0,0,,0,1,,0,0,0,0,0,0,0
+2020,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,32428,0,0,,5,5,,0,0,0,1,0,0,0
+2020,126979,Denver Seminary,00135200,1,Main Campus,856,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127185,Fort Lewis College,00135300,1,Main Campus,3469,0,0,,4,1,,0,0,0,0,0,0,0
+2020,127273,Iliff School of Theology,00135400,1,Main Campus,215,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127389,Lamar Community College,00135500,1,Lamar Community College,723,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127653,Naropa University,02117500,1,Arapahoe Campus,855,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1293,0,0,,0,1,,0,0,0,1,0,0,0
+2020,127778,Otero Junior College,00136200,1,Main Campus,1216,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127918,Regis University,00136300,1,Northwest Denver Campus,6310,0,0,,3,0,,0,0,0,0,2,0,1
+2020,128258,Trinidad State College,00136800,1,Trinidad Campus,1404,0,0,,0,0,,0,0,0,0,0,0,0
+2020,128258,Trinidad State College,00136800,2,Valley Campus,1404,0,0,,2,0,,0,0,0,0,0,0,0
+2020,126614,University of Colorado Boulder,00137000,1,Main Campus,37437,0,0,,12,5,,0,0,0,0,8,0,0
+2020,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,12380,0,0,,4,1,,0,0,0,0,1,0,0
+2020,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,24723,0,0,,0,0,,0,0,0,0,0,0,0
+2020,127060,University of Denver,00137100,1,University Park Campus,13856,0,0,,5,8,,0,0,0,0,2,1,0
+2020,127741,University of Northern Colorado,00134900,1,Main Campus,11460,0,0,,6,1,,0,0,0,0,3,0,0
+2020,128391,Western Colorado University,00137200,1,Main Campus,3203,0,0,,0,0,,0,0,0,0,0,0,0
+2021,126182,Adams State University,00134500,1,Adams State University,3138,0,0,,4,3,,0,0,0,0,0,0,0
+2021,126669,Colorado Christian University,00940100,1,Lakewood Main Campus,8472,0,0,,0,1,,0,0,0,0,1,0,0
+2021,126678,Colorado College,00134700,1,Colorado College,2266,0,0,,1,0,,0,0,0,0,9,0,0
+2021,127556,Colorado Mesa University,00135800,1,Colorado Mesa University - Main Campus,8907,0,0,,3,5,,0,0,0,1,0,0,0
+2021,126711,Colorado Mountain College,00450600,1,Colorado Mountain College,5134,0,0,,1,1,,0,0,0,0,0,0,0
+2021,126748,Colorado Northwestern Community College,00135900,1,Colorado Northwestern Community College,1150,0,0,,0,0,,0,0,0,0,0,0,0
+2021,126748,Colorado Northwestern Community College,00135900,2,Colorado Northwestern Community College-Craig Campus,1150,0,0,,0,0,,0,0,0,0,0,0,0
+2021,126775,Colorado School of Mines,00134800,1,Main Campus,7187,0,0,,4,1,,0,0,0,0,5,0,0
+2021,128106,Colorado State University Pueblo,00136500,1,Colorado State University Pueblo,6110,0,0,,2,0,,0,0,0,0,0,0,0
+2021,126818,Colorado State University-Fort Collins,00135000,1,Main Campus,32586,0,0,,10,6,,0,0,0,3,5,0,2
+2021,126979,Denver Seminary,00135200,1,Main Campus,899,0,0,,0,0,,0,0,0,0,0,0,0
+2021,127185,Fort Lewis College,00135300,1,Main Campus,3567,0,0,,0,1,,0,0,1,1,6,0,0
+2021,127389,Lamar Community College,00135500,1,Lamar Community College,696,0,0,,0,0,,0,0,0,0,0,0,0
+2021,127565,Metropolitan State University of Denver,00136000,1,Auraria Campus (Main Campus),17678,0,0,,1,0,,0,0,0,0,1,0,0
+2021,127653,Naropa University,02117500,1,Arapahoe Campus,964,0,0,,0,0,,0,0,0,0,0,0,0
+2021,127732,Northeastern Junior College,00136100,1,Main Campus (Sterling- CO),1392,0,0,,1,0,,0,0,0,0,0,0,1
+2021,127778,Otero Junior College,00136200,1,Main Campus,1151,0,0,,0,0,,0,0,0,0,0,0,0
+2021,127918,Regis University,00136300,1,Northwest Denver Campus,5566,0,0,,2,1,,0,0,0,0,3,0,0
+2021,128258,Trinidad State College,00136800,1,Trinidad Campus,1500,0,0,,0,0,,0,0,0,0,0,0,0
+2021,128258,Trinidad State College,00136800,2,Valley Campus,1500,0,0,,1,0,,0,0,0,0,0,0,0
+2021,126614,University of Colorado Boulder,00137000,1,Main Campus,39000,0,0,,16,10,,0,0,0,0,6,0,0
+2021,126580,University of Colorado Colorado Springs,00450900,1,University of Colorado Colorado Springs,12031,0,0,,3,1,,0,0,0,0,0,0,0
+2021,126562,University of Colorado Denver/Anschutz Medical Campus,00450800,1,University of Colorado Denver - Downtown,24267,0,0,,4,1,,0,0,0,0,1,0,0
+2021,127060,University of Denver,00137100,1,University Park Campus,14130,0,0,,8,6,,0,0,0,2,9,0,1
+2021,127741,University of Northern Colorado,00134900,1,Main Campus,10348,0,0,,9,1,,0,0,0,0,2,0,0
+2021,128391,Western Colorado University,00137200,1,Main Campus,3689,0,0,,7,1,,0,0,0,0,0,0,0
