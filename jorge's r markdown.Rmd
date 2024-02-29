@@ -32,7 +32,7 @@ data2 <- read.csv("Criminal_Offenses_On_campus_Student_Housing_Facilities.csv") 
   rename_with(~ paste0(.x,"_student_housing"), recycle0 = TRUE) |>
   rename(Survey.year = Survey.year_student_housing, unique_id = unique_id_student_housing)
 
-dataset <- data1 |> left_join(data2) |> 
+dataset <- data1 |> left_join(data2) 
 data3 <- read.csv("Criminal_Offenses_Noncampus.csv")
 data4 <- read.csv("Criminal_Offenses_Public_property.csv")
 data5 <- read.csv("Criminal_Offenses_Reported_by_Local_State_Police.csv")
