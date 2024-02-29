@@ -1,0 +1,48 @@
+---
+title: "paige combine data"
+output: html_document
+date: "2024-02-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#libraries
+library(dplyr)
+```
+
+## attempt 1
+
+```{r load files}
+
+#read CSV files
+
+arrests_local_state_police <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Local_State_Police.csv")
+
+arrests_noncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Noncampus.csv")
+
+arrests_oncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_On_campus.csv")
+
+##problem: need to combine based on university and campus - make new id
+
+# Create a new column by combining "userID" and "campusID"
+arrests_local_state_police$new_ID <- paste(arrests_local_state_police$Unitid, arrests_local_state_police$Campus.ID, sep = "-")
+
+arrests_noncampus$new_ID <- paste(arrests_noncampus$Unitid, arrests_noncampus$Campus.ID, sep = "-")
+
+# Add source column
+
+#arrests_local_state_police$source <- "Local_State_Police"
+#arrests_noncampus$source <- "Noncampus"
+
+# combine data frames
+
+arrests_combined_1 <- rbind(arrests_local_state_police, arrests_noncampus)
+
+arrests_combined_1 <- bind_rows(arrests_local_state_police, arrests_noncampus)
+
+# write combined data to CSV
+
+write.csv(arrests_combined_1, "arrests_combined_1.csv", row.names=FALSE)
+```
+
