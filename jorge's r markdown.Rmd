@@ -27,13 +27,17 @@ data1 <- read.csv("Criminal_Offenses_On_campus.csv") |>
   mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
   rename_with(~ paste0(.x,"_all_campus"), recycle0 = TRUE) |>
   rename(Survey.year = Survey.year_all_campus, unique_id = unique_id_all_campus)
+
 data2 <- read.csv("Criminal_Offenses_On_campus_Student_Housing_Facilities.csv") |> 
   mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |> 
   rename_with(~ paste0(.x,"_student_housing"), recycle0 = TRUE) |>
   rename(Survey.year = Survey.year_student_housing, unique_id = unique_id_student_housing)
 
-dataset <- data1 |> left_join(data2) 
-data3 <- read.csv("Criminal_Offenses_Noncampus.csv")
+data3 <- read.csv("Criminal_Offenses_Noncampus.csv") |>
+  mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
+  rename_with(~ paste0(.x, "_crim_offense_noncampus"), recycle0 = TRUE) |>
+  rename(Survey.year = Survey.year_crim_offense_noncampus, unique_id = unique_id_crim_offense_noncampus)
+
 data4 <- read.csv("Criminal_Offenses_Public_property.csv")
 data5 <- read.csv("Criminal_Offenses_Reported_by_Local_State_Police.csv")
 data6 <- read.csv("Arrests_On_campus.csv")
@@ -46,6 +50,10 @@ data12 <- read.csv("Disciplinary_Actions_Student_Housing_Facilities.csv")
 data13 <- read.csv("Disciplinary_Actions_Noncampus.csv")
 data14 <- read.csv("Disciplinary_Actions_Public_Property.csv")
 data15 <- read.csv("Disciplinary_Actions_Reported_by_Local_State_Police.csv") 
+
+# This is how our datasets being joined into one
+dataset <- data1 |> left_join(data2) |>
+  left_join(data3)
 ```
 
 
