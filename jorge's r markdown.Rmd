@@ -82,8 +82,6 @@ data12 <- read.csv("Disciplinary_Actions_Public_Property.csv") |>
   mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
   rename_with(~ paste0(.x, "_disciplinary_public"), recycle0 = TRUE) |>
   rename(Survey.year = Survey.year_disciplinary_public, unique_id = unique_id_disciplinary_public)
-  
-data13 <- read.csv("Disciplinary_Actions_Reported_by_Local_State_Police.csv") 
 
 # This is our datasets being joined into one
 dataset <- data1 |> left_join(data2) |>
@@ -96,7 +94,7 @@ dataset <- data1 |> left_join(data2) |>
   left_join(data9) |>
   left_join(data10) |>
   left_join(data11) |>
-  left_join(data12)
+  left_join(data12) 
 ```
 
 
