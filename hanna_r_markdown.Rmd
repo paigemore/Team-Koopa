@@ -1,0 +1,26 @@
+---
+title: "hanna's r markdown"
+author: "Hanna Medina"
+date: "2024-03-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## EDA
+Institution size (number of students) for campuses with more than 15,000 students versus campuses with 15,000 or fewer students for liquor law violations.
+
+```{r EDA}
+instiution_size <- ifelse(cleaned_data$Institution.Size_all_campus > 15000, "Large", "Small")
+
+ggplot(cleaned_data, aes(x= instiution_size
+))+
+  geom_bar() +
+  labs(title = "Comparison of Instiution Size With Liquor Law Violations",
+       x = "Instiution size (15,000)",
+       y = "Number of Campuses") +
+  theme_minimal()
+```
