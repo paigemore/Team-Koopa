@@ -9,46 +9,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #libraries
 library(dplyr)
-```
+library(ggplot2)
 
-## attempt 1
-
-```{r load files}
-
-#read CSV files
-
-arrests_local_state_police <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Local_State_Police.csv")
-
-arrests_noncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Noncampus.csv")
-
-arrests_oncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_On_campus.csv")
-
-##problem: need to combine based on university and campus - make new id
-
-# Create a new column by combining "userID" and "campusID"
-arrests_local_state_police$new_ID <- paste(arrests_local_state_police$Unitid, arrests_local_state_police$Campus.ID, sep = "-")
-
-arrests_noncampus$new_ID <- paste(arrests_noncampus$Unitid, arrests_noncampus$Campus.ID, sep = "-")
-
-# Add source column
-
-#arrests_local_state_police$source <- "Local_State_Police"
-#arrests_noncampus$source <- "Noncampus"
-
-# combine data frames
-
-arrests_combined_1 <- rbind(arrests_local_state_police, arrests_noncampus)
-
-arrests_combined_1 <- bind_rows(arrests_local_state_police, arrests_noncampus)
-
-# write combined data to CSV
-
-write.csv(arrests_combined_1, "arrests_combined_1.csv", row.names=FALSE)
+#install.packages("ggally")
+#library("ggally")
 ```
 
 ## working code from jorge
 
-```{r jorge's code for data combination}
+```{r jorges code for data combination}
 
 getwd()
 
@@ -138,7 +107,66 @@ removing NA values, removing useless columns
 dataset[is.na(dataset)] <- 0
 
 #remove repeated columns (like unitid repeating for each xcel file)
-cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests__stuhousing", "Institution.name_arrests__stuhousing", "OPEID_arrests__stuhousing", "Campus.ID_arrests__stuhousing", "Campus.Name_arrests__stuhousing", "Institution.Size_arrests__stuhousing", "Unitid_arrests__noncampus", "Institution.name_arrests__noncampus", "OPEID_arrests__noncampus", "Campus.ID_arrests__noncampus", "Campus.Name_arrests__noncampus", "Institution.Size_arrests__noncampus", "Unitid_arrests__public", "Institution.name_arrests__public", "OPEID_arrests__public", "Campus.ID_arrests__public", "Campus.Name_arrests__public", "Institution.Size_arrests__public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public", "Unitid_disciplinary_housing", "Institution.name_disciplinary_housing", "OPEID_disciplinary_housing", "Campus.ID_disciplinary_housing", "Campus.Name_disciplinary_housing", "Institution.Size_disciplinary_housing")
+#(3/4/24) just fixed some problems w this
+
+cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests_stuhousing", "Institution.name_arrests_stuhousing", "OPEID_arrests_stuhousing", "Campus.ID_arrests_stuhousing", "Campus.Name_arrests_stuhousing", "Institution.Size_arrests_stuhousing", "Unitid_arrests_noncampus", "Institution.name_arrests_noncampus", "OPEID_arrests_noncampus", "Campus.ID_arrests_noncampus", "Campus.Name_arrests_noncampus", "Institution.Size_arrests_noncampus", "Unitid_arrests_public", "Institution.name_arrests_public", "OPEID_arrests_public", "Campus.ID_arrests_public", "Campus.Name_arrests_public", "Institution.Size_arrests_public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public", "Unitid_disciplinary_housing", "Institution.name_disciplinary_housing", "OPEID_disciplinary_housing", "Campus.ID_disciplinary_housing", "Campus.Name_disciplinary_housing", "Institution.Size_disciplinary_housing")
 cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
 ```
 
+
+## tests
+
+```{r tests}
+mean(cleaned_data$Institution.Size_all_campus)
+```
+## summary stats
+
+```{r sum stat 1}
+
+#new column combining liquor law violations across disciplinary, arrests and location (public, stuhousing, campus, noncampus)
+cleaned_data$all_liquor_violations <- cleaned_data$Liquor.law.violations_arrests_campus + cleaned_data$Liquor.law.violations_arrests_noncampus + cleaned_data$Liquor.law.violations_arrests_public + cleaned_data$Liquor.law.violations_arrests_stuhousing + cleaned_data$Liquor.law.violations_disciplinary_campus + cleaned_data$Liquor.law.violations_disciplinary_housing + cleaned_data$Liquor.law.violations_disciplinary_noncampus + cleaned_data$Liquor.law.violations_disciplinary_public
+
+numeric_data <- select(cleaned_data, where(is.numeric))
+
+# figure margins too large
+#pairs(numeric_data)
+
+lm(Institution ~ all_liquor_violations, data = cleaned_data)
+
+```
+
+
+## this code is useless
+
+```{r load files}
+
+#read CSV files
+
+#arrests_local_state_police <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Local_State_Police.csv")
+
+#arrests_noncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Noncampus.csv")
+
+#arrests_oncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_On_campus.csv")
+
+##problem: need to combine based on university and campus - make new id
+
+# Create a new column by combining "userID" and "campusID"
+#arrests_local_state_police$new_ID <- paste(arrests_local_state_police$Unitid, arrests_local_state_police$Campus.ID, sep = "-")
+
+#arrests_noncampus$new_ID <- paste(arrests_noncampus$Unitid, arrests_noncampus$Campus.ID, sep = "-")
+
+# Add source column
+
+#arrests_local_state_police$source <- "Local_State_Police"
+#arrests_noncampus$source <- "Noncampus"
+
+# combine data frames
+
+#arrests_combined_1 <- rbind(arrests_local_state_police, arrests_noncampus)
+
+#arrests_combined_1 <- bind_rows(arrests_local_state_police, arrests_noncampus)
+
+# write combined data to CSV
+
+#write.csv(arrests_combined_1, "arrests_combined_1.csv", row.names=FALSE)
+```
