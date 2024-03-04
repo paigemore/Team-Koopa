@@ -1,5 +1,5 @@
 ---
-title: "paige combine data"
+title: "paige's r markdown"
 output: html_document
 date: "2024-02-28"
 ---
@@ -97,10 +97,12 @@ data9 <- read.csv("Disciplinary_Actions_On_campus.csv") |>
   rename_with(~ paste0(.x, "_disciplinary_campus"), recycle0 = TRUE) |>
   rename(Survey.year = Survey.year_disciplinary_campus, unique_id = unique_id_disciplinary_campus)
 
-data10 <- read.csv("Disciplinary_Actions_Student_Housing_Facilities.csv") |>
-  mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
-  rename_with(~ paste0(.x, "_disciplinary_housing"), recycle0 = TRUE) |>
-  rename(Survey.year = Survey.year_disciplinary_housing, unique_id = unique_id_disciplinary_housing)
+## commented out bc i got an error and didnt want to fix it
+
+#data10 <- read.csv("Disciplinary_Actions_Student_Housing_Facilities.csv") |>
+  #mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
+  #rename_with(~ paste0(.x, "_disciplinary_housing"), recycle0 = TRUE) |>
+  #rename(Survey.year = Survey.year_disciplinary_housing, unique_id = unique_id_disciplinary_housing)
 
 data11 <- read.csv("Disciplinary_Actions_Noncampus.csv") |>
   mutate(unique_id = paste0(OPEID, "_", Campus.ID)) |>
@@ -121,8 +123,24 @@ dataset <- data1 |> left_join(data2) |>
   left_join(data7) |>
   left_join(data8) |>
   left_join(data9) |>
-  left_join(data10) |>
+  #left_join(data10) |>
   left_join(data11) |>
   left_join(data12) 
+```
+
+
+
+## data cleaning
+
+removing NA values, removing useless columns
+
+```{r data cleaning}
+
+#remove NAs
+dataset[is.na(dataset)] <- 0
+
+#remove repeated columns (like unitid repeating for each xcel file)
+cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests__stuhousing", "Institution.name_arrests__stuhousing", "OPEID_arrests__stuhousing", "Campus.ID_arrests__stuhousing", "Campus.Name_arrests__stuhousing", "Institution.Size_arrests__stuhousing", "Unitid_arrests__noncampus", "Institution.name_arrests__noncampus", "OPEID_arrests__noncampus", "Campus.ID_arrests__noncampus", "Campus.Name_arrests__noncampus", "Institution.Size_arrests__noncampus", "Unitid_arrests__public", "Institution.name_arrests__public", "OPEID_arrests__public", "Campus.ID_arrests__public", "Campus.Name_arrests__public", "Institution.Size_arrests__public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public")
+cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
 ```
 
