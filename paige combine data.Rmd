@@ -11,8 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(ggplot2)
 
-#install.packages("ggally")
-#library("ggally")
+# kable
+library(knitr)
+
+library(tidyr)
+library(tidyverse)
 ```
 
 ## working code from jorge
@@ -131,7 +134,51 @@ numeric_data <- select(cleaned_data, where(is.numeric))
 # figure margins too large
 #pairs(numeric_data)
 
-lm(Institution ~ all_liquor_violations, data = cleaned_data)
+ggplot(cleaned_data, aes(y=Institution.Size_all_campus, x=all_liquor_violations)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+#cleaned_data$all_liquor_violations[16]
+
+year_factor <- as.factor(cleaned_data$Survey.year)
+
+#ggplot(cleaned_data, aes(x=year_factor, y=all_liquor_violations)) + 
+ # geom_bar(stat= "identity", aes(fill=year_factor)) +
+  #xlab("Year") +
+  #ylab("Liquor Law Violations") +
+  #ggtitle("Barplot of Total Liquor Violations v. Year")
+
+ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year_factor)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Year", y = "Liquor Law Violations", fill = "Year") +
+  ggtitle("Barplot of Total Liquor Violations vs. Year")
+
+
+#ggplot(cleaned_data, aes(Institution.Size_all_campus)) +
+ # geom_histogram() +
+ # xlab("Institution Enrollment") +
+ # ylab("Count of Campuses") +
+ # ggtitle("Histogram of Institution Size")
+
+#small_inst <- cleaned_data$Institution.Size_all_campus <= 15000
+#large_inst <- cleaned_data$Institution.Size_all_campus >= 15001
+#large_inst <- cleaned_data$Institution.Size_all_campus >= 20000
+
+#size_data <- data.frame()
+
+#size_table <- data.frame(
+ # Small = sum(small_inst),
+ # Large = sum(large_inst)
+#)
+
+#kable(size_table, caption = "Institution Sizes")
+
+#ggplot(cleaned_data, aes(y=all_liquor_violations, x=unique_id)) +
+  #geom_boxplot()
+
+#summary(lm(all_liquor_violations ~ ., data= cleaned_data)) +
+#knitr::kable(digits=c(3,3,3,3),
+#caption ="Simple Linear Regression Model Estimating Liquor Violations from All Predictors")
 
 ```
 
