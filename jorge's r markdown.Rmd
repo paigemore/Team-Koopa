@@ -7,17 +7,15 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(knitr)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-getwd()
-```
+
 
 
 # Getting all of the data to join into one. 
@@ -96,6 +94,109 @@ dataset <- data1 |> left_join(data2) |>
   left_join(data11) |>
   left_join(data12) 
 ```
+
+
+```{r}
+#remove NAs
+dataset[is.na(dataset)] <- 0
+
+#remove repeated columns (like unitid repeating for each xcel file)
+#(3/4/24) just fixed some problems w this
+
+cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests_stuhousing", "Institution.name_arrests_stuhousing", "OPEID_arrests_stuhousing", "Campus.ID_arrests_stuhousing", "Campus.Name_arrests_stuhousing", "Institution.Size_arrests_stuhousing", "Unitid_arrests_noncampus", "Institution.name_arrests_noncampus", "OPEID_arrests_noncampus", "Campus.ID_arrests_noncampus", "Campus.Name_arrests_noncampus", "Institution.Size_arrests_noncampus", "Unitid_arrests_public", "Institution.name_arrests_public", "OPEID_arrests_public", "Campus.ID_arrests_public", "Campus.Name_arrests_public", "Institution.Size_arrests_public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public", "Unitid_disciplinary_housing", "Institution.name_disciplinary_housing", "OPEID_disciplinary_housing", "Campus.ID_disciplinary_housing", "Campus.Name_disciplinary_housing", "Institution.Size_disciplinary_housing")
+cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
+```
+
+
+```{r}
+cleaned_data$all_liquor_violations <- cleaned_data$Liquor.law.violations_arrests_campus + cleaned_data$Liquor.law.violations_arrests_noncampus + cleaned_data$Liquor.law.violations_arrests_public + cleaned_data$Liquor.law.violations_arrests_stuhousing + cleaned_data$Liquor.law.violations_disciplinary_campus + cleaned_data$Liquor.law.violations_disciplinary_housing + cleaned_data$Liquor.law.violations_disciplinary_noncampus + cleaned_data$Liquor.law.violations_disciplinary_public
+
+numeric_data <- select(cleaned_data, where(is.numeric))
+```
+
+
+# Tests
+```{r}
+mean(cleaned_data$Negligent.manslaughter_all_campus)
+mean(cleaned_data$Sex.offenses...Forcible_all_campus)
+mean(cleaned_data$Rape_all_campus)
+mean(cleaned_data$Fondling_all_campus)
+mean(cleaned_data$Sex.offenses...Non.forcible_all_campus)
+mean(cleaned_data$Incest_all_campus)
+mean(cleaned_data$Statutory.rape_all_campus)
+mean(cleaned_data$Robbery_all_campus)
+mean(cleaned_data$Burglary_all_campus)
+mean(cleaned_data$Motor.vehicle.theft_all_campus)
+mean(cleaned_data$Arson_all_campus)
+```
+
+```{r}
+means <- round(c(mean(cleaned_data$Negligent.manslaughter_all_campus),
+           mean(cleaned_data$Sex.offenses...Forcible_all_campus),
+           mean(cleaned_data$Rape_all_campus),
+           mean(cleaned_data$Fondling_all_campus),
+           mean(cleaned_data$Sex.offenses...Non.forcible_all_campus),
+           mean(cleaned_data$Incest_all_campus),
+           mean(cleaned_data$Statutory.rape_all_campus),
+           mean(cleaned_data$Robbery_all_campus),
+           mean(cleaned_data$Burglary_all_campus),
+           mean(cleaned_data$Motor.vehicle.theft_all_campus),
+           mean(cleaned_data$Arson_all_campus)), 3)
+
+sds <- round(c(
+  sd(cleaned_data$Negligent.manslaughter_all_campus),
+  sd(cleaned_data$Sex.offenses...Forcible_all_campus),
+  sd(cleaned_data$Rape_all_campus),
+  sd(cleaned_data$Fondling_all_campus),
+  sd(cleaned_data$Sex.offenses...Non.forcible_all_campus),
+  sd(cleaned_data$Incest_all_campus),
+  sd(cleaned_data$Statutory.rape_all_campus),
+  sd(cleaned_data$Robbery_all_campus),
+  sd(cleaned_data$Burglary_all_campus),
+  sd(cleaned_data$Motor.vehicle.theft_all_campus),
+  sd(cleaned_data$Arson_all_campus)
+), 3)
+
+summary_df <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+               "Arson"),
+  Mean = means,
+  StandardDeviation = sds
+)
+
+
+
+
+
+
+
+
+
+
+knitr::kable(summary_df, caption = "Average Values of Different Campus Offenses",
+             col.names = c("Variables", "Average", "Standard Deviation"))
+
+```
+
+
+# More tests
+```{r}
+#test <- cleaned_data |> mutate(liquor_violations_capita = Liquor.law.violations_disciplinary_campus/1e3) |> select(Institution.name_all_campus, liquor_violations_capita)
+#cleaned_data |> filter(Liquor.law.violations_disciplinary_campus > 25) |> group_by(Institution.name_all_campus) |> 
+ # summarize(all_offense_capita = sum(all_liquor_violations)/Institution.Size_all_campus) |> 
+
+cleaned_data |> filter(all_liquor_violations > 1000) |>
+ ggplot() +
+  geom_point(aes(x = Institution.name_all_campus, y = all_liquor_violations),
+             color = "black") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Liquor Law Violations Per College Campus (Schools with 1000+ Violations)") +
+  xlab("Institution") + ylab("Liquor Violations") 
+
+```
+
 
 
 
