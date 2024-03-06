@@ -14,13 +14,12 @@ library(ggplot2)
 Institution size (number of students) for campuses with more than 15,000 students versus campuses with 15,000 or fewer students for liquor law violations.
 
 ```{r EDA}
-instiution_size <- ifelse(cleaned_data$Institution.Size_all_campus > 15000, "Large", "Small")
+institution_size <- ifelse(cleaned_data$Institution.Size_all_campus > 15000, "Large", "Small")
 
-ggplot(cleaned_data, aes(x= instiution_size
-))+
-  geom_bar() +
-  labs(title = "Comparison of Instiution Size With Liquor Law Violations",
-       x = "Instiution size (15,000)",
-       y = "Number of Campuses") +
+ggplot(cleaned_data, aes(x = institution_size, y = all_liquor_violations)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  labs(title = "Comparison of Institution Size With Mean Liquor Law Violations",
+       x = "Institution Size",
+       y = "Mean Liquor Violations") +
   theme_minimal()
 ```
