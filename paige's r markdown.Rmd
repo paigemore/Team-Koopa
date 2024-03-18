@@ -18,7 +18,7 @@ library(tidyr)
 library(tidyverse)
 ```
 
-## working code from jorge
+## data combination from jorge
 
 ```{r jorges code for data combination}
 
@@ -181,6 +181,22 @@ ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year
 #caption ="Simple Linear Regression Model Estimating Liquor Violations from All Predictors")
 
 ```
+## split data
+
+```{r}
+smp_size <- floor(0.75 * nrow(cleaned_data))
+
+# Assuming 'data' is your dataset
+# Set seed for reproducibility
+set.seed(4242)
+
+train_split <- sample(seq_len(nrow(cleaned_data)), size = smp_size)
+
+train <- cleaned_data[train_split,]
+test <- cleaned_data[-train_split,]
+```
+
+
 ## K-fold help: code from DSCI 445
 
 ```{r}
