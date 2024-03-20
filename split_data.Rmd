@@ -1,0 +1,28 @@
+---
+title: "split_data"
+author: "Hanna Medina"
+date: "2024-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+```
+
+# split data
+
+```{r}
+smp_size <- floor(0.75 * nrow(cleaned_data))
+
+# Set seed for reproducibility
+set.seed(4242)
+
+train_split <- sample(seq_len(nrow(cleaned_data)), size = smp_size)
+
+train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
+test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
+```
