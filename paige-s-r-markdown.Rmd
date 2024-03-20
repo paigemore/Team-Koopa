@@ -202,7 +202,7 @@ train_means_sd <- sapply(train[,c(7:20, 22:86)],
 ttrain_means_sd <- t(train_means_sd)
 
 knitr::kable(ttrain_means_sd, digits = 5)
-#knitr::kable(train_means_sd)
+knitr::kable(train_means_sd)
 
 test_means_sd <- sapply(test[,c(7:20, 22:86)], 
                          function(x) c(mean(x, na.rm = TRUE), 
@@ -211,9 +211,6 @@ test_means_sd <- sapply(test[,c(7:20, 22:86)],
 
 ttest_means_sd <- t(test_means_sd)
 knitr::kable(ttest_means_sd, digits = 5)
-
-knitr::kable(list(ttrain_means_sd, ttest_means_sd), caption = "Tables Side by Side") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 
 sapply(train[7:86], function(x) is.numeric(x), simplify = FALSE)
