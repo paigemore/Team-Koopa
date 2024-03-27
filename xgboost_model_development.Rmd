@@ -1,0 +1,57 @@
+---
+title: "model_development"
+author: "Hanna Medina"
+date: "2024-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# packages
+```{r echo=FALSE}
+install.packages("xgboost")
+library(xgboost)
+library(tidyr)
+library(dplyr)
+```
+
+```{r}
+# checking for unique values in all liq violations
+unique_values <- unique(train$all_liquor_violations)
+
+# any non-numeric values in all liq violations?
+non_numeric_values <- unique_values[!is.numeric(unique_values)]
+print(non_numeric_values)
+
+sum(is.na(train$all_liquor_violations))
+```
+
+
+```{r}
+# all liq violations converted to numeric
+train$all_liquor_violations <- as.numeric(train$all_liquor_violations)
+
+# create matrix for training
+train_matrix <- matrix(train$all_liquor_violations, ncol = 1)
+test <- xgb.DMatrix(data = train_matrix)
+
+# data matrix
+data_matrix <- xgb.DMatrix(data = as.matrix(train[, -which(names(train) %in% "all_liquor_violations")]))
+```
+
+
+
+
+
+
+
+
+# idk
+```{r}
+# Convert data to matrix format
+train_matrix <- as.matrix(train[, -which(names(train) %in% "response")])
+# Initialize XGBoost model
+boosting_model <- xgboost(data = xgb.DMatrix(train_matrix, label = train$response), nrounds = 100, objective = "binary:logistic", max_depth = 3, eta = 0.1)
+```
