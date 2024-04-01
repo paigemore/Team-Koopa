@@ -15,38 +15,144 @@ install.packages("xgboost")
 library(xgboost)
 library(tidyr)
 library(dplyr)
+install.packages("caret")
+library(caret)
 ```
 
 ```{r}
+# Exclude specified columns
+excluded_columns <- c("Survey.year", "Unitid_all_campus", 
+                      "OPEID_all_campus", "Campus.ID_all_campus", "Campus.Name_all_campus", 
+                      "Institution.Size_all_campus")
+
+# Select only numeric columns (excluding the excluded columns)
+numeric_train <- train[, sapply(train, is.numeric) & !(names(train) %in% excluded_columns)]
+
+# Calculate the sum of each numeric column
+column_sums <- colSums(numeric_train, na.rm = TRUE)
+
+# Sort the column sums from most to least
+sorted_column_sums <- sort(column_sums, decreasing = TRUE)
+
+# Print the sorted column sums
+print(sorted_column_sums)
+```
+From the results, most of the liquor violations come from liquor.law.violations_disciplinary_campus (makes up about 42.205% of the violations)
+
+Performing statistial tests to see which variables are relevant to the data.
+
+Any variable with a violation of 5 or higher has relevancy to all the liquor violations
+```{r}
+# Perform Pearson's correlation test
+correlation_result <- cor.test(train$Arson_crim_offense_noncampus, train$all_liquor_violations)
+
+# Print the correlation test result
+print(correlation_result)
+```
+devloping model
+```{r}
+# Using variables with a positive linear relationship with "all_liquor_violations"
+selected_vars <- c(
+  "Liquor.law.violations_disciplinary_campus",
+  "Liquor.law.violations_disciplinary_housing",
+  "Drug.law.violations_disciplinary_campus",
+  "Drug.law.violations_disciplinary_housing",
+  "Liquor.law.violations_arrests_campus",
+  "Drug.law.violations_arrests_campus",
+  "Liquor.law.violations_arrests_stuhousing",
+  "Drug.law.violations_arrests_stuhousing",
+  "Burglary_all_campus",
+  "Liquor.law.violations_disciplinary_noncampus",
+  "Drug.law.violations_arrests_public",
+  "Liquor.law.violations_arrests_public",
+  "Motor.vehicle.theft_all_campus",
+  "Burglary_student_housing",
+  "Rape_all_campus",
+  "Drug.law.violations_disciplinary_noncampus",
+  "Rape_student_housing",
+  "Liquor.law.violations_disciplinary_public",
+  "Fondling_all_campus",
+  "Aggravated.assault_all_campus",
+  "Liquor.law.violations_arrests_noncampus",
+  "Drug.law.violations_arrests_noncampus",
+  "Motor.vehicle.theft_crim_offense_public",
+  "Robbery_crim_offense_public",
+  "Illegal.weapons.possession_arrests_campus",
+  "Aggravated.assault_crim_offense_public",
+  "Fondling_student_housing",
+  "Sex.offenses...Forcible_all_campus",
+  "Illegal.weapons.possession_disciplinary_campus",
+  "Illegal.weapons.possession_arrests_public",
+  "Robbery_all_campus",
+  "Sex.offenses...Forcible_student_housing",
+  "Arson_all_campus",
+  "Illegal.weapons.possession_disciplinary_housing",
+  "Burglary_crim_offense_noncampus",
+  "Drug.law.violations_disciplinary_public",
+  "Aggravated.assault_student_housing",
+  "Arson_student_housing",
+  "Motor.vehicle.theft_crim_offense_noncampus",
+  "Fondling_crim_offense_public",
+  "Sex.offenses...Forcible_crim_offense_public",
+  "Aggravated.assault_crim_offense_noncampus",
+  "Rape_crim_offense_noncampus",
+  "Fondling_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_stuhousing",
+  "Sex.offenses...Forcible_crim_offense_noncampus",
+  "Rape_crim_offense_public",
+  "Arson_crim_offense_public",
+  "Robbery_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_noncampus",
+  "Arson_crim_offense_noncampus"
+)
+
+# Subset the data with selected variables
+# aka extracting only the columns from the dataset that are relevant for the analysis or modeling task. It filters out unnecessary or redundant features, focusing on the analysis on the varibles thought to have the most impact on the target variable. It helps simplify the datset and improve model interpretability, and potentially enhancing model performance by reducing noise and overfitting
+train_subset <- train[selected_vars]
+
+# Extract the target variable
+# aka isolates the target variable. all liquor violations represents the outcome that the model learns to predict based on the input features. by seperating the target variable, the modeling process can focus on understanding the relationships between the input features and the target oucome. 
+y_train <- train$all_liquor_violations
+
+# Train an ensemble model using XGBoost
+xgb_model <- xgboost(data = as.matrix(train_subset), label = y_train, nrounds = 100, verbose = 0)
+
+# Print the trained model
+print(xgb_model)
+
+```
+
+
+
+
+
+
+
+
+# idea 1
+```{r}
 # checking for unique values in all liq violations
-unique_values <- unique(train$all_liquor_violations)
+# unique_values <- unique(train$all_liquor_violations)
 
 # any non-numeric values in all liq violations?
-non_numeric_values <- unique_values[!is.numeric(unique_values)]
-print(non_numeric_values)
+# non_numeric_values <- unique_values[!is.numeric(unique_values)]
+#print(non_numeric_values)
 
-sum(is.na(train$all_liquor_violations))
+#sum(is.na(train$all_liquor_violations))
 ```
 
 
 ```{r}
 # all liq violations converted to numeric
-train$all_liquor_violations <- as.numeric(train$all_liquor_violations)
+# train$all_liquor_violations <- # as.numeric(train$all_liquor_violations)
 
 # create matrix for training
-train_matrix <- matrix(train$all_liquor_violations, ncol = 1)
-test <- xgb.DMatrix(data = train_matrix)
+# train_matrix <- matrix(train$all_liquor_violations, ncol = 1)
+# test <- xgb.DMatrix(data = train_matrix)
 
 # data matrix
-data_matrix <- xgb.DMatrix(data = as.matrix(train[, -which(names(train) %in% "all_liquor_violations")]))
+#data_matrix <- xgb.DMatrix(data = as.matrix(train[, -which(names(train) %in% "all_liquor_violations")]))
 ```
-
-
-
-
-
-
-
 
 # idk
 ```{r}
