@@ -10,13 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(ggplot2)
 library(knitr)
+library(tidyr)
+library(tidyverse)
+install.packages("ggdendro")
+library(ggdendro)
 ```
-
-
-
-
-
-
 
 # Getting all of the data to join into one. 
 
@@ -167,14 +165,6 @@ summary_df <- data.frame(
 )
 
 
-
-
-
-
-
-
-
-
 knitr::kable(summary_df, caption = "Average Values of Different Campus Offenses",
              col.names = c("Variables", "Average", "Standard Deviation"))
 
@@ -196,6 +186,220 @@ cleaned_data |> filter(all_liquor_violations > 1000) |>
   xlab("Institution") + ylab("Liquor Violations") 
 
 ```
+
+
+```{r}
+smp_size <- floor(0.75 * nrow(cleaned_data))
+
+# Set seed for reproducibility
+set.seed(4242)
+
+train_split <- sample(seq_len(nrow(cleaned_data)), size = smp_size)
+
+train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
+test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
+train_means_sd <- sapply(train[,c(7:20, 22:86)], 
+                         function(x) c(mean(x, na.rm = TRUE), 
+                                       sd(x, na.rm=TRUE)),
+                         simplify = FALSE) |> bind_rows()
+ttrain_means_sd <- t(train_means_sd)
+
+knitr::kable(ttrain_means_sd, digits = 5)
+#knitr::kable(train_means_sd)
+
+test_means_sd <- sapply(test[,c(7:20, 22:86)], 
+                         function(x) c(mean(x, na.rm = TRUE), 
+                                       sd(x, na.rm=TRUE)),
+                         simplify = FALSE) |> bind_rows()
+
+ttest_means_sd <- t(test_means_sd)
+knitr::kable(ttest_means_sd, digits = 5)
+
+#knitr::kable(list(ttrain_means_sd, ttest_means_sd), caption = "Tables Side by Side") %>%
+ # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
+#sapply(train[7:86], function(x) is.numeric(x), simplify = FALSE)
+#full_set <- train |> rbind(test)
+```
+
+# Clustering method
+
+## I will use hierarchical clustering because it doesn't require a choice of K.
+
+### Method here is 'complete'
+```{r, cache=TRUE}
+
+train_num <- train |> as_tibble() |> select(-where(is.character))
+
+# Remove all the columns I do not want
+train_num <- train_num[, !names(train_num) %in% c('Unitid_all_campus', 'OPEID_all_campus', 'Campus.ID_all_campus')]
+
+# Performing clustering 
+set.seed(432)
+dist_matrix <- dist(train_num, method = "euclidean")
+h_clus_complete <- hclust(dist_matrix, method = "complete") 
+
+## Plotting 
+dend_data <- dendro_data(h_clus_complete)
+label_names <- dend_data$labels
+label_names$h <- 0
+
+
+ggplot() + 
+  geom_segment(data = dend_data$segments, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(data = label_names, aes(x = x, y = h, label = label), hjust = 1, angle = 45) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank()) +
+  labs(y = "Height") +
+  ggtitle("Dendrogram Produced from Hierarchical Clustering, Complete Method")
+```
+
+
+### Method here is 'average'
+
+```{r, cache=TRUE}
+# Performing clustering 
+set.seed(432)
+dist_matrix <- dist(train_num, method = "euclidean")
+h_clus_avg <- hclust(dist_matrix, method = "average") 
+
+## Plotting 
+dend_data1 <- dendro_data(h_clus_avg)
+label_names1 <- dend_data1$labels
+label_names1$h <- 0
+
+
+ggplot() + 
+  geom_segment(data = dend_data1$segments, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(data = label_names1, aes(x = x, y = h, label = label), hjust = 1, angle = 45) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank()) +
+  labs(y = "Height") +
+  ggtitle("Dendrogram Produced from Hierarchical Clustering, Method of Averaging")
+```
+
+
+## will try K means clustering, getting too many clusters from hierarchical clustering
+
+```{r, cache=TRUE}
+alc_2cols1 <- train_num[ , c("all_liquor_violations", "Institution.Size_all_campus")]
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = 3, nstart = 20)
+km.out
+```
+
+## Plotting optimal number of clusters
+```{r}
+nclust <- 10
+wss <- numeric(nclust)
+set.seed(421)
+## Looping through different number of clusters 
+for (i in 1:nclust) {
+  km.out <- kmeans(alc_2cols1, centers = i, nstart = 20)
+  wss[i] <- km.out$tot.withinss
+}
+
+## Plotting 
+wss_df <- tibble(clusters = 1:nclust, wss = wss)
+sc_plot <- ggplot(wss_df, aes(x = clusters, y = wss, group = 1)) +
+  geom_point(size = 3) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2, 4, 6, 8, 10)) +
+  scale_y_continuous(labels = scales::comma) +
+  xlab("Number of Clusters") +
+  ylab("Within Cluster Sum of Squares") +
+  ggtitle("Optimal Number of Clusters")
+sc_plot +
+  geom_hline(
+    yintercept = wss,
+    linetype = 'dashed',
+    col = c(rep('black',4),'red', rep('black', 5))
+  )
+```
+
+
+
+## Now plotting with the optimal number of clusters
+```{r}
+k <- 5
+
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = k, nstart = 20)
+
+train_num$cluster_id <- factor(km.out$cluster)
+ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color = cluster_id)) +
+    geom_point(alpha = 0.40) +
+    xlab("Institution Size (Number of Students Enrolled)") +
+    ylab("Liquor Violations") +
+  ggtitle("Plot of Clustered Liquor Law Violations by Institution Size") +
+  labs(color = "Cluster #")
+```
+
+
+## Now clustering using survey year as our predictor. 
+
+
+```{r}
+alc_2cols2 <- train_num[ , c("all_liquor_violations", "Survey.year")]
+set.seed(421)
+km.out2 <- kmeans(alc_2cols1, centers = 3, nstart = 20)
+km.out2
+
+nclust <- 10
+wss <- numeric(nclust)
+set.seed(421)
+## Looping through different number of clusters 
+for (i in 1:nclust) {
+  km.out2 <- kmeans(alc_2cols2, centers = i, nstart = 20)
+  wss[i] <- km.out2$tot.withinss
+}
+
+## Plotting 
+wss_df2 <- tibble(clusters = 1:nclust, wss = wss)
+sc_plot2 <- ggplot(wss_df2, aes(x = clusters, y = wss, group = 1)) +
+  geom_point(size = 3) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2, 4, 6, 8, 10)) +
+  scale_y_continuous(labels = scales::comma) +
+  xlab("Number of Clusters") +
+  ylab("Within Cluster Sum of Squares") +
+  ggtitle("Optimal Number of Clusters Plot")
+sc_plot2 +
+  geom_hline(
+    yintercept = wss,
+    linetype = 'dashed',
+    col = c(rep('black',4),'red', rep('black', 5))
+  )
+
+k <- 5
+
+set.seed(421)
+km.out2 <- kmeans(alc_2cols2, centers = k, nstart = 20)
+
+train_num$cluster_id <- factor(km.out2$cluster)
+ggplot(train_num, aes(Survey.year, all_liquor_violations, color = cluster_id)) +
+    geom_point(alpha = 0.40) +
+    xlab("Institution Size (Number of Students Enrolled)") +
+    ylab("Liquor Violations") +
+  ggtitle("Plot of Clustered Liquor Law Violations by Survey Year") +
+  labs(color = "Cluster #")
+```
+
+
+TIME TO REMOVE ROWS FOR DIFFERENT CAMPUSES!
+
+```{r}
+to_remove <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport", "Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire")
+matches <- unique(grep(paste(to_remove,collapse="|"), 
+                        train$Campus.Name_all_campus, value=TRUE))
+new_train <- train |> filter(!Campus.Name_all_campus %in% matches)
+```
+
 
 
 
