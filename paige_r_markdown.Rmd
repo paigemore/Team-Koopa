@@ -125,7 +125,48 @@ dataset[is.na(dataset)] <- 0
 #(3/4/24) just fixed some problems w this
 
 cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests_stuhousing", "Institution.name_arrests_stuhousing", "OPEID_arrests_stuhousing", "Campus.ID_arrests_stuhousing", "Campus.Name_arrests_stuhousing", "Institution.Size_arrests_stuhousing", "Unitid_arrests_noncampus", "Institution.name_arrests_noncampus", "OPEID_arrests_noncampus", "Campus.ID_arrests_noncampus", "Campus.Name_arrests_noncampus", "Institution.Size_arrests_noncampus", "Unitid_arrests_public", "Institution.name_arrests_public", "OPEID_arrests_public", "Campus.ID_arrests_public", "Campus.Name_arrests_public", "Institution.Size_arrests_public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public", "Unitid_disciplinary_housing", "Institution.name_disciplinary_housing", "OPEID_disciplinary_housing", "Campus.ID_disciplinary_housing", "Campus.Name_disciplinary_housing", "Institution.Size_disciplinary_housing")
-cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
+
+
+## had to change this dataset name before removing the campses ##
+
+cleaned <- dataset[, !names(dataset) %in% cols_to_remove]
+```
+
+## remove campuses
+
+Removes campuses outside of Colorado.
+
+```{r}
+
+to_remove1 <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport")
+
+#check vector length
+#length(to_remove1)
+
+matches <- unique(grep(paste(to_remove1,collapse="|"), 
+                        cleaned$Campus.Name_all_campus, value=TRUE))
+cleaned_1 <- cleaned |> filter(!Campus.Name_all_campus %in% matches)
+
+to_remove2 <- c("Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast) Metropolitan Campus", "Fort Sill", "Vance", "Westport Plaza", "Lackland Air Force Base", "Columbia", "Coast Guard", "Merrit Island", "Vandenberg AFB")
+
+#length(to_remove2)
+
+matches <- unique(grep(paste(to_remove2,collapse="|"), 
+                        cleaned_1$Campus.Name_all_campus, value=TRUE))
+cleaned_2 <- cleaned_1 |> filter(!Campus.Name_all_campus %in% matches)
+
+to_remove3 <- c("Webster University St. Louis-Main Campus", "Space Coast", "Fort Worth", "San Francisco", "Cincinnati", "Oceana", "Holloman", "Columbia Metropolitan Campus", "Melbourne Campus", "Columbus AFB- MS", "Rockford", "Columbia College @ Ft. Sill", "Schriever", "Great Lakes Naval", "Keesler", "Columbia College @ Ft. Stewart", "Coast Guard Air Station (Clearwater)", "Camp Smith", "Whiteman Air Force Base", "Sarasota Metropolitan Campus", "Barbers Point- HI", "Vendenberg AFB", "Whiting Field", "Geneva", "Sand Island- HI", "Concorde Career College", "Irvine Metropolitan", "Valley Campus", "Hill Air Force Base", "Redstone Arsenal", "Laughlin", "NS Guantanamo Bay", "Fort Sill", "Ozark Metropolitan Campus", "NS Mayport", " Fort Rucker", "New River (MCAS)", "Landover Site", "Columbia College @ Elgin", "International Salon and Spa Academy", "Nalanda Campus", "Colubia College @Mesquite", "Great Lakes Naval", "Delaware", "Columbia Metropolitan Campus", "Quantico", "Columbia College @ Salt Lake City", "Bolling Air Force Base", "Mesquite", "Dallas/Fort Worth", "Osan", "Randolph Air Force Base", "Newark Campus", "Springfield", "Southern Maryland Higher Education Center (SMHEC)", "Fort Leonard Wood", "Columbia College Kings Bay", "Vienna", "Freeport", "Wright Patterson", "Irvine", "Columbia College (Main Campus) @ Columbia", "Ft. Stewart", "Washington- D.C.", "Joint Base Myer/Henderson Hall", "Tulsa", "Bangkok", "Nashville", "Hohenfels", "Athens", "New River", "Misawa", "Columbia College Imperial", "PCC Bayfield Site", "Iwanuki", "Asbury Theological Seminary - Tulsa - OK Instructional Site", "Grefenwoehr", "Webster University St. Louis-Main Campus", "Vilseck", "Arkansas", "New River", "Maryland")
+
+#length(to_remove3)
+
+matches <- unique(grep(paste(to_remove3,collapse="|"), 
+                        cleaned_2$Campus.Name_all_campus, value=TRUE))
+cleaned_data <- cleaned_2 |> filter(!Campus.Name_all_campus %in% matches)
+
+
+# take a look
+#head(cleaned_data)
+
 ```
 
 
@@ -135,8 +176,8 @@ cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
 ```{r tests}
 mean(cleaned_data$Institution.Size_all_campus)
 
-cleaned_data |> mutate(Institution.name_all_campus = as.factor(Institution.name_all_campus)) |> group_by(Institution.name_all_campus, Survey.year) |>
-  summarize(num = length(unique(Campus.Name_all_campus)))
+#cleaned_data |> mutate(Institution.name_all_campus = as.factor(Institution.name_all_campus)) |> group_by(Institution.name_all_campus, Survey.year) |>
+ # summarize(num = length(unique(Campus.Name_all_campus)))
 
 ```
 ## summary stats
@@ -168,7 +209,8 @@ year_factor <- as.factor(cleaned_data$Survey.year)
 ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year_factor)) +
   geom_bar(stat = "identity") +
   labs(x = "Year", y = "Liquor Law Violations", fill = "Year") +
-  ggtitle("Barplot of Total Liquor Violations vs. Year")
+  ggtitle("Barplot of Total Liquor Violations vs. Year") +
+  theme(legend.position = "none")
 
 
 #ggplot(cleaned_data, aes(Institution.Size_all_campus)) +
@@ -311,51 +353,6 @@ test_pres <- data.frame(
 knitr::kable(test_pres, caption = "Test Data", col.names = c("Variable", "Mean", "SD"))
 
 ```
-
-# remove campuses!!!!!
-
-Eliminate campuses outside of CO.
-
-```{r, cache=TRUE}
-#look at schools to remove
-
-#to_remove <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport", #### "Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast Metropolitan Campus", "Fort Sill", "Vance", "Webster University St. Louis-Main Campus", "Space Coast", "Fort Worth", "San Francisco", "Cincinnati", "Oceana", "Holloman", "Columbia Metropolitan Campus", "Melbourne Campus", "Columbus AFB- MS", "Rockford", "Columbia College @ Ft. Sill", "Schriever", "Great Lakes Naval", "Keesler", "Columbia College @ Ft. Stewart", "Coast Guard Air Station (Clearwater)", "Camp Smith", "Whiteman Air Force Base", "Sarasota Metropolitan Campus", "Barbers Point- HI", "Vendenberg AFB", "Whiting Field", "Geneva", "Sand Island- HI", "Concorde Career College", "Irvine Metropolitan", "Valley Campus", "Hill Air Force Base", "Redstone Arsenal", "Laughlin", "NS Guantanamo Bay", "Fort Sill", "Ozark Metropolitan Campus", "NS Mayport", " Fort Rucker", "New River (MCAS)", "Landover Site", "Columbia College @ Elgin", "International Salon and Spa Academy", "Nalanda Campus", "Colubia College @Mesquite", "Great Lakes Naval", "Delaware", "Columbia Metropolitan Campus", "Quantico", "Columbia College @ Salt Lake City", "Bolling Air Force Base", "Mesquite", "Dallas/Fort Worth", "Osan", "Randolph Air Force Base", "Newark Campus", "Springfield", "Southern Maryland Higher Education Center (SMHEC)", "Fort Leonard Wood", "Columbia College Kings Bay", "Vienna", "Freeport", "Wright Patterson", "Irvine", "Columbia College (Main Campus) @ Columbia", "Ft. Stewart", "Washington- D.C.", "Joint Base Myer/Henderson Hall", "Tulsa", "Bangkok", "Nashville", "Hohenfels", "Athens", "New River", "Misawa", "Columbia College Imperial", "PCC Bayfield Site", "Iwanuki", "Asbury Theological Seminary - Tulsa - OK Instructional Site", "Grefenwoehr", "Webster University St. Louis-Main Campus", "Vilseck")
-
-### # # # # # # # # # # # # # # # # # # # # # # # # ##
-## copy code from here to the end of the code chunk ##
-### # # # # # # # # # # # # # # # # # # # # # # # # ##
-
-to_remove1 <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport")
-
-#check vector length
-#length(to_remove1)
-
-matches <- unique(grep(paste(to_remove1,collapse="|"), 
-                        train$Campus.Name_all_campus, value=TRUE))
-new_train1 <- train |> filter(!Campus.Name_all_campus %in% matches)
-
-to_remove2 <- c("Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast) Metropolitan Campus", "Fort Sill", "Vance")
-
-#length(to_remove2)
-
-matches <- unique(grep(paste(to_remove2,collapse="|"), 
-                        new_train1$Campus.Name_all_campus, value=TRUE))
-new_train2 <- new_train1 |> filter(!Campus.Name_all_campus %in% matches)
-
-to_remove3 <- c("Webster University St. Louis-Main Campus", "Space Coast", "Fort Worth", "San Francisco", "Cincinnati", "Oceana", "Holloman", "Columbia Metropolitan Campus", "Melbourne Campus", "Columbus AFB- MS", "Rockford", "Columbia College @ Ft. Sill", "Schriever", "Great Lakes Naval", "Keesler", "Columbia College @ Ft. Stewart", "Coast Guard Air Station (Clearwater)", "Camp Smith", "Whiteman Air Force Base", "Sarasota Metropolitan Campus", "Barbers Point- HI", "Vendenberg AFB", "Whiting Field", "Geneva", "Sand Island- HI", "Concorde Career College", "Irvine Metropolitan", "Valley Campus", "Hill Air Force Base", "Redstone Arsenal", "Laughlin", "NS Guantanamo Bay", "Fort Sill", "Ozark Metropolitan Campus", "NS Mayport", " Fort Rucker", "New River (MCAS)", "Landover Site", "Columbia College @ Elgin", "International Salon and Spa Academy", "Nalanda Campus", "Colubia College @Mesquite", "Great Lakes Naval", "Delaware", "Columbia Metropolitan Campus", "Quantico", "Columbia College @ Salt Lake City", "Bolling Air Force Base", "Mesquite", "Dallas/Fort Worth", "Osan", "Randolph Air Force Base", "Newark Campus", "Springfield", "Southern Maryland Higher Education Center (SMHEC)", "Fort Leonard Wood", "Columbia College Kings Bay", "Vienna", "Freeport", "Wright Patterson", "Irvine", "Columbia College (Main Campus) @ Columbia", "Ft. Stewart", "Washington- D.C.", "Joint Base Myer/Henderson Hall", "Tulsa", "Bangkok", "Nashville", "Hohenfels", "Athens", "New River", "Misawa", "Columbia College Imperial", "PCC Bayfield Site", "Iwanuki", "Asbury Theological Seminary - Tulsa - OK Instructional Site", "Grefenwoehr", "Webster University St. Louis-Main Campus", "Vilseck")
-
-#length(to_remove3)
-
-matches <- unique(grep(paste(to_remove3,collapse="|"), 
-                        new_train2$Campus.Name_all_campus, value=TRUE))
-new_train <- new_train2 |> filter(!Campus.Name_all_campus %in% matches)
-
-
-# take a look
-#head(new_train)
-
-```
-
 
 
 # neural network
@@ -758,12 +755,12 @@ set.seed(4242)
 #install.packages("glmnet")
 library(glmnet)
 
-train_num <- dplyr::select_if(train, is.numeric)
+train_num <- dplyr::select_if(new_train, is.numeric)
 
 #specify y
 y <- train_num$all_liquor_violations
 
-train$Liquor
+#train$Liquor
 
 exclude_columns <- c("Unitid_all_campus", "OPEID_all_campus", 
                     "Campus.ID_all_campus", "all_liquor_violations", 
@@ -796,7 +793,7 @@ best_lasso <- glmnet(x, y, alpha = 1, lambda = best_lambda)
 #coefficients from lasso model
 lasso_coef <- coef(best_lasso)
 
-#lasso_coef
+lasso_coef
 
 #make coefficients matrix
 lc_mat <- as.matrix(lasso_coef)
@@ -814,12 +811,12 @@ lc_df_clean <- lc_df_filtered[-1]
 
 #lc_df_clean
 
-lc_table_df <- data.frame(
+#lc_table_df <- data.frame(
   Variable = c("Rape (student housing)", "Fondling (student housing)", "Aggravated Assault (student housing)", "Burglary (student housing)", "Arson (student housing)", "Burglary (noncampus)", "Drug Law Violations (arrests, campus)", "Drug Law Violations (arrests, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
   Coefficients = lc_df_clean)
 
 #table of lasso coefficients
-knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
+#knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
 
 ```
 
