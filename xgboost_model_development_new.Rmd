@@ -1,0 +1,247 @@
+---
+title: "model_development"
+author: "Hanna Medina"
+date: "2024-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# packages
+```{r echo=FALSE}
+library(knitr)
+options(repos = "https://cloud.r-project.org")
+# install.packages("xgboost")
+library(xgboost)
+library(tidyr)
+library(dplyr)
+# install.packages("caret")
+library(caret)
+```
+
+```{r}
+# Ensure train is a data frame
+if (!is.data.frame(train)) {
+  stop("train must be a data frame.")
+}
+
+# Exclude specified columns
+excluded_columns <- c("Survey.year", "Unitid_all_campus", 
+                      "OPEID_all_campus", "Campus.ID_all_campus", "Campus.Name_all_campus", 
+                      "Institution.Size_all_campus")
+
+# Select only numeric columns (excluding the excluded columns)
+numeric_train <- train[, sapply(train, is.numeric) & 
+                       !(names(train) %in% excluded_columns)]
+
+# Calculate the sum of each numeric column
+column_sums <- colSums(numeric_train, na.rm = TRUE)
+
+# Sort the column sums from most to least
+sorted_column_sums <- sort(column_sums, decreasing = TRUE)
+
+# Print the sorted column sums
+print(sorted_column_sums)
+```
+
+From the results, most of the liquor violations come from liquor.law.violations_disciplinary_campus (makes up about 42.205% of the violations)
+
+Performing statistial tests to see which variables are relevant to the data.
+
+Any variable with a violation of 5 or higher has relevancy to all the liquor violations
+
+```{r}
+# Check the data types of the columns
+class(train$Arson_crim_offense_noncampus)
+class(train$all_liquor_violations)
+
+# If any of the columns are not numeric, convert them to numeric
+train$Arson_crim_offense_noncampus <- as.numeric(train$Arson_crim_offense_noncampus)
+train$all_liquor_violations <- as.numeric(train$all_liquor_violations)
+
+# Perform Pearson's correlation test
+correlation_result <- cor.test(train$Arson_crim_offense_noncampus, train$all_liquor_violations)
+
+# Format the correlation test result
+formatted_result <- sprintf("Correlation test result:
+  - t-value = %.3f
+  - degrees of freedom = %d
+  - p-value = %s
+  - correlation estimate = %.3f
+  - 95 percent confidence interval: [%.3f, %.3f]",
+  correlation_result$statistic,
+  correlation_result$parameter,
+  format(correlation_result$p.value),
+  correlation_result$estimate,
+  correlation_result$conf.int[1],
+  correlation_result$conf.int[2]
+)
+
+# Print the formatted result
+cat(formatted_result)
+```
+
+devloping model
+```{r}
+# Using variables with a positive linear relationship with "all_liquor_violations"
+# Define the selected variables for modeling
+selected_vars <- c(
+  "Liquor.law.violations_disciplinary_campus",
+  "Liquor.law.violations_disciplinary_housing",
+  "Drug.law.violations_disciplinary_campus",
+  "Drug.law.violations_disciplinary_housing",
+  "Liquor.law.violations_arrests_campus",
+  "Drug.law.violations_arrests_campus",
+  "Liquor.law.violations_arrests_stuhousing",
+  "Drug.law.violations_arrests_stuhousing",
+  "Burglary_all_campus",
+  "Liquor.law.violations_disciplinary_noncampus",
+  "Drug.law.violations_arrests_public",
+  "Liquor.law.violations_arrests_public",
+  "Motor.vehicle.theft_all_campus",
+  "Burglary_student_housing",
+  "Rape_all_campus",
+  "Drug.law.violations_disciplinary_noncampus",
+  "Rape_student_housing",
+  "Liquor.law.violations_disciplinary_public",
+  "Fondling_all_campus",
+  "Aggravated.assault_all_campus",
+  "Liquor.law.violations_arrests_noncampus",
+  "Drug.law.violations_arrests_noncampus",
+  "Motor.vehicle.theft_crim_offense_public",
+  "Robbery_crim_offense_public",
+  "Illegal.weapons.possession_arrests_campus",
+  "Aggravated.assault_crim_offense_public",
+  "Fondling_student_housing",
+  "Sex.offenses...Forcible_all_campus",
+  "Illegal.weapons.possession_disciplinary_campus",
+  "Illegal.weapons.possession_arrests_public",
+  "Robbery_all_campus",
+  "Sex.offenses...Forcible_student_housing",
+  "Arson_all_campus",
+  "Illegal.weapons.possession_disciplinary_housing",
+  "Burglary_crim_offense_noncampus",
+  "Drug.law.violations_disciplinary_public",
+  "Aggravated.assault_student_housing",
+  "Arson_student_housing",
+  "Motor.vehicle.theft_crim_offense_noncampus",
+  "Fondling_crim_offense_public",
+  "Sex.offenses...Forcible_crim_offense_public",
+  "Aggravated.assault_crim_offense_noncampus",
+  "Rape_crim_offense_noncampus",
+  "Fondling_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_stuhousing",
+  "Sex.offenses...Forcible_crim_offense_noncampus",
+  "Rape_crim_offense_public",
+  "Arson_crim_offense_public",
+  "Robbery_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_noncampus",
+  "Arson_crim_offense_noncampus"
+)
+
+# Subset the data with selected variables
+# This step extracts only the columns from the dataset that are relevant for the analysis or modeling task.
+# It filters out unnecessary or redundant features, focusing the analysis on the variables thought to have the most impact on the target variable.
+# This helps simplify the dataset, improves model interpretability, and potentially enhances model performance by reducing noise and overfitting.
+train_subset <- train[selected_vars]
+
+# Extract the target variable
+# This step isolates the target variable "all_liquor_violations".
+# "all_liquor_violations" represents the outcome that the model learns to predict based on the input features.
+# By separating the target variable, the modeling process can focus on understanding the relationships between the input features and the target outcome.
+y_train <- train$all_liquor_violations
+
+# Train an ensemble model using XGBoost
+# This step builds a predictive model using the XGBoost algorithm.
+# The model is trained on the selected variables and the target variable.
+# Hyperparameters like nrounds and verbose are specified to control the training process.
+# Higher values for nrounds allow the model to learn more complex patterns in the data but may increase the risk of overfitting.
+xgb_model <- xgboost(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 100, 
+                     verbose = 0)
+xgb_validation <- xgb.cv(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 100, 
+                     nfold = 10,
+                     verbose = 0)
+# do 5 for nrounds
+
+# Print the trained model
+print("Trained XGBoost Model:")
+print(xgb_model)
+```
+
+# looking at the evaluation
+```{r}
+eval_metrics <- xgb_validation$evaluation_log
+plot(eval_metrics$iter, eval_metrics$train_rmse_mean, xlim = c(0,20))
+points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red")
+```
+
+# zooming in on the evaluation
+```{r}
+plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
+```
+
+# super cleaned data set (4/15)
+```{r}
+# cleaned <- dataset[, !names(dataset) %in% cols_to_remove]
+
+# create train = 75% and test = 25% set
+#train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
+#test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
+```
+
+
+
+
+
+
+
+
+
+
+
+# helpin the gang out
+```{r}
+# train_2017 <- train[train$Survey.year == 2017,]
+# print(train_2017)
+# last_87 <- tail(train_2017,87)
+# print(last_87)
+```
+
+# idea 1
+```{r}
+# checking for unique values in all liq violations
+# unique_values <- unique(train$all_liquor_violations)
+
+# any non-numeric values in all liq violations?
+# non_numeric_values <- unique_values[!is.numeric(unique_values)]
+#print(non_numeric_values)
+
+#sum(is.na(train$all_liquor_violations))
+```
+
+
+```{r}
+# all liq violations converted to numeric
+# train$all_liquor_violations <- # as.numeric(train$all_liquor_violations)
+
+# create matrix for training
+# train_matrix <- matrix(train$all_liquor_violations, ncol = 1)
+# test <- xgb.DMatrix(data = train_matrix)
+
+# data matrix
+#data_matrix <- xgb.DMatrix(data = as.matrix(train[, -which(names(train) %in% "all_liquor_violations")]))
+```
+
+# idk
+```{r}
+# Convert data to matrix format yeah
+#train_matrix <- as.matrix(train[, -which(names(train) %in% "response")])
+# Initialize XGBoost model
+#boosting_model <- xgboost(data = xgb.DMatrix(train_matrix, label = train$response), nrounds = 100, objective = "binary:logistic", max_depth = 3, eta = 0.1)
+```
