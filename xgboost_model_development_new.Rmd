@@ -83,7 +83,7 @@ formatted_result <- sprintf("Correlation test result:
 cat(formatted_result)
 ```
 
-devloping model
+developing model
 ```{r}
 # Using variables with a positive linear relationship with "all_liquor_violations"
 # Define the selected variables for modeling
@@ -162,7 +162,7 @@ xgb_model <- xgboost(data = as.matrix(train_subset),
                      label = y_train, 
                      nrounds = 100, 
                      verbose = 0)
-xgb_validation <- xgb.cv(data = as.matrix(train_subset), 
+xgb_validation1 <- xgb.cv(data = as.matrix(train_subset), 
                      label = y_train, 
                      nrounds = 100, 
                      nfold = 10,
@@ -172,19 +172,69 @@ xgb_validation <- xgb.cv(data = as.matrix(train_subset),
 # Print the trained model
 print("Trained XGBoost Model:")
 print(xgb_model)
+print(xgb_validation1)
 ```
 
 # looking at the evaluation
 ```{r}
-eval_metrics <- xgb_validation$evaluation_log
-plot(eval_metrics$iter, eval_metrics$train_rmse_mean, xlim = c(0,20))
-points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red")
+eval_metrics <- xgb_validation1$evaluation_log
+plot(eval_metrics$iter, eval_metrics$train_rmse_mean, xlim = c(0,20)) # train
+points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red") # test
 ```
 
 # zooming in on the evaluation
 ```{r}
 plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
 ```
+
+# Evaluation pt 2 (might go with this one)
+```{r}
+xgb_validation2 <- xgb.cv(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 5, 
+                     nfold = 10,
+                     verbose = 0)
+print(xgb_validation2)
+```
+
+# looking at the evalution pt 2
+```{r}
+eval_metrics2 <- xgb_validation2$evaluation_log
+plot(eval_metrics2$iter, eval_metrics2$train_rmse_mean, xlim = c(0,6)) # train
+points(eval_metrics2$iter, eval_metrics2$test_rmse_mean, col = "red") # test
+```
+
+# Model evaluation
+
+```{r}
+# making predicitons
+# train_predictions <- predict(xgb_validation2, as.matrix(train_subset))
+# test_predictions <- predict(xgb_validation2, as.matrix(test_subset))
+
+# performance metrices
+# train_rmse <- sqrt(mean((train_predictions - y_train)^2))
+# test_rmse <- sqrt(mean((test_predictions - y_test)^2))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # super cleaned data set (4/15)
 ```{r}
@@ -194,16 +244,6 @@ plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
 #train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
 #test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
 ```
-
-
-
-
-
-
-
-
-
-
 
 # helpin the gang out
 ```{r}
