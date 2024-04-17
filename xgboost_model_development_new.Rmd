@@ -182,6 +182,32 @@ plot(eval_metrics$iter, eval_metrics$train_rmse_mean, xlim = c(0,20)) # train
 points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red") # test
 ```
 
+# official one
+```{r}
+xgb_model <- xgboost(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 5, 
+                     verbose = 0)
+
+test_subset <- test[selected_vars]
+test_predictions <- predict(xgb_model, as.matrix(test_subset))
+test_rmse <- sqrt(mean((test_predictions - test$all_liquor_violations)^2))
+cat("Test RMSE:", test_rmse, "\n")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # zooming in on the evaluation
 ```{r}
 plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
@@ -200,8 +226,10 @@ print(xgb_validation2)
 # looking at the evalution pt 2
 ```{r}
 eval_metrics2 <- xgb_validation2$evaluation_log
-plot(eval_metrics2$iter, eval_metrics2$train_rmse_mean, xlim = c(0,6)) # train
+plot(eval_metrics2$iter, eval_metrics2$train_rmse_mean) # train
 points(eval_metrics2$iter, eval_metrics2$test_rmse_mean, col = "red") # test
+
+
 ```
 
 # Model evaluation
