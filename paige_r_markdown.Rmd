@@ -138,6 +138,8 @@ Removes campuses outside of Colorado.
 
 ```{r}
 
+### note!! i had to change the full dataset name from cleaned_data to cleaned (see last line in the chunk above) ###
+
 to_remove1 <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport")
 
 #check vector length
@@ -358,7 +360,7 @@ knitr::kable(test_pres, caption = "Test Data", col.names = c("Variable", "Mean",
 # neural network
 
 ### plot.nnet
-```{r}
+```{r plot nnet}
 ## for plot.nnet()
 #install.packages("devtools")
 library(devtools)
@@ -747,7 +749,7 @@ plot.nnet <- function(mod.in,nid=T,all.out=T,all.in=T,bias=T,wts.only=F,rel.rsc=
 ```
 
 ### fit lasso for predictors
-```{r, cache = TRUE}
+```{r fit lasso, cache = TRUE}
 
 set.seed(4242)
 
@@ -811,22 +813,30 @@ lc_df_clean <- lc_df_filtered[-1]
 
 #lc_df_clean
 
-#lc_table_df <- data.frame(
-  Variable = c("Rape (student housing)", "Fondling (student housing)", "Aggravated Assault (student housing)", "Burglary (student housing)", "Arson (student housing)", "Burglary (noncampus)", "Drug Law Violations (arrests, campus)", "Drug Law Violations (arrests, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
+lc_table_df <- data.frame(
+  Variable = c("Rape (student housing)", "Fondling (student housing)", "Burglary (student housing)", "Arson (student housing)", "Burglary (noncampus)", "Drug Law Violations (arrests, campus)", "Drug Law Violations (arrests, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
   Coefficients = lc_df_clean)
 
 #table of lasso coefficients
-#knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
+knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
 
 ```
 
 best_lambda = 17.44531
 lasso coefficients found are liquor.law.violations... -> must remove these cols
 
-Coeffs found: rape_student_housing, burglary_student_housing, arson_student_housing, burglarly_crim_offense_noncampus, drug.law.violation_arrests_campus, drug.law.violations_arrests_noncampus, drug.law.violations_disciplinary_campus, drug.law.violations_disciplinary_housing
+Coeffs found: Rape_student_housing
+Fondling_student_housing
+Burglary_student_housing
+Arson_student_housing
+Burglary_crim_offense_noncampus
+Drug.law.violations_arrests_camps
+Drug.law.violations_arrests_noncampus
+Drug.law.violations_disciplinary_campus
 
 ### fit nets
-```{r, cache=TRUE}
+
+```{r fit nn, cache=TRUE}
 ## potential libraries
 
 #install.packages("keras")
@@ -882,14 +892,20 @@ train_num <- na.omit(train_num)
 # AIC trials -- using predictors selected by LASSO
 
 options(na.action = "na.fail")
-full_model <- lm(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Burglary_crim_offense_noncampus + Drug.law.violations_arrests_campus + Drug.law.violations_arrests_noncampus + Drug.law.violations_disciplinary_campus + Drug.law.violations_disciplinary_housing, data = train_num)
+full_model <- lm(all_liquor_violations ~ Rape_student_housing + Fondling_student_housing + Burglary_student_housing + Arson_student_housing + Burglary_crim_offense_noncampus + Drug.law.violations_arrests_campus + Drug.law.violations_arrests_noncampus + Drug.law.violations_disciplinary_campus + Drug.law.violations_disciplinary_housing, data = train_num)
 model_dredge <- dredge(full_model, rank = "AIC", extra = c("R^2"))
 head(model_dredge)
 
 
 # NN test to see when model breaks
-NN_1 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson,
-                  data = train, linear.output=TRUE)
+NN_1 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Drug.law.violations_arrests_noncampus,
+                  data = train, hidden = 1, linear.output=TRUE)
+
+NN_2 <- neuralnet(all_liquor_violations ~ Rape_student_housing, hidden = 1, data = train, linear.output = TRUE)
+
+NN_3 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing, data = train, hidden = 1, linear.output=TRUE)
+
+NN_4 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing, data = train, hidden = c(1, 2), linear.output=TRUE)
 
 NN_model <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Burglary_crim_offense_noncampus + Drug.law.violations_arrests_campus + Drug.law.violations_arrests_noncampus + Drug.law.violations_disciplinary_campus + Drug.law.violations_disciplinary_housing, data = train, hidden = 10, linear.output = TRUE)
 
@@ -897,7 +913,8 @@ w <- NN_model$weights
 w
 
 #plot(NN_model)
-#plot.nnet(NN_model)
+plot.nnet(NN_4)
+
 
 ```
 
@@ -905,6 +922,50 @@ w
 AIC selection from model selected by LASSO: incl. all but burglary_crim_offense_noncampus
 
 Interpreting plot.nn() output: gray lines indicate negative weight, black: pos weight. the thicker the lines, the greater the |weight|.
+
+# test model(s)
+
+```{r test}
+#predicted <- predict(NN_1, test, type = "response")
+
+# Assuming you've already trained your neural network model and have test data
+# For demonstration purposes, let's assume 'model' is your trained neural network model
+# and 'test_data' is your test data with predictors (features) and actual values
+
+# Make predictions using the neural network model
+
+## NN model 1
+predictions_1 <- predict(NN_1, test)
+
+# Calculate Mean Squared Error
+mse_1 <- mean((test$all_liquor_violations - predictions_1)^2)
+
+mse_1
+
+
+## NN model 2
+
+predictions_2 <- predict(NN_2, test)
+mse_2 <- mean((test$all_liquor_violations - predictions_2)^2)
+
+mse_2
+
+
+## NN model 3
+
+predictions_3 <- predict(NN_3, test)
+mse_3 <- mean((test$all_liquor_violations - predictions_3)^2)
+
+mse_3
+
+
+## NN model 4
+
+predictions_4 <- predict(NN_4, test)
+mse_4 <- mean((test$all_liquor_violations - predictions_3)^2)
+
+mse_3
+```
 
 
 ## this code is useless
