@@ -16,10 +16,13 @@ Institution size (number of students) for campuses with more than 15,000 student
 ```{r EDA}
 institution_size <- ifelse(cleaned_data$Institution.Size_all_campus > 15000, "Large", "Small")
 
-ggplot(cleaned_data, aes(x = institution_size, y = all_liquor_violations)) +
+ggplot(cleaned_data, aes(x = institution_size, y = all_liquor_violations, fill = institution_size)) +
   geom_bar(stat = "summary", fun = "mean", position = "dodge") +
   labs(title = "Comparison of Institution Size With Mean Liquor Law Violations",
        x = "Institution Size",
        y = "Mean Liquor Violations") +
-  theme_minimal()
+  scale_fill_manual(values = c("Large" = "skyblue", "Small" = "darkblue")) +  # Set custom fill colors
+  theme_minimal() +
+  theme(legend.position = "none")  # Remove legend
+
 ```
