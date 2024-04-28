@@ -180,10 +180,16 @@ print(xgb_validation1)
 eval_metrics <- xgb_validation1$evaluation_log
 plot(eval_metrics$iter, eval_metrics$train_rmse_mean, 
      xlim = c(0,20),
-     xlab = "Boosting Interaction",
+     xlab = "Iterations",
      ylab = "Mean RMSE",
-     main = "Mean RMSE vs. Boosting Interaction") # train
+     main = "Mean RMSE vs. Iterations Interaction") # train
 points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red") # test
+legend("topright", legend = c("Training RMSE", "Test RMSE"),
+       col = c("black", "red"),
+       pch = c(1,1),
+       cex = 0.8,
+       bg = "white",
+       box.lty = 0)
 ```
 
 # official one
