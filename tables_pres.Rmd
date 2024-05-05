@@ -175,6 +175,7 @@ cleaned_data$all_liquor_violations <- cleaned_data$Liquor.law.violations_arrests
 
 ```
 
+
 ## barplot
 
 ```{r barplot}
@@ -187,7 +188,7 @@ ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year
   theme(legend.position = "none")
 ```
 
-## split data
+## split data tables
 
 ```{r split}
 set.seed(4242)
@@ -200,6 +201,103 @@ train_split <- sample(seq_len(nrow(cleaned_data)), size = smp_size)
 # create train = 75% and test = 25% set
 train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
 test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
+
+## check split to ensure nothing got screwed up
+
+# create df of training data means and sd of each column
+train_means_sd <- sapply(train[,c(7:20, 22:86)], 
+                         function(x) c(mean(x, na.rm = TRUE), 
+                                       sd(x, na.rm=TRUE)),
+                         simplify = FALSE) |> bind_rows()
+# transpose so table is legible
+ttrain_means_sd <- t(train_means_sd)
+# create kable table
+#knitr::kable(ttrain_means_sd, digits = 5, caption = "Training Data, metrics to compare to test", col.names = c("Columns", "Mean", "SD"))
+
+# create df of testing data means and sd of each column
+test_means_sd <- sapply(test[,c(7:20, 22:86)], 
+                         function(x) c(mean(x, na.rm = TRUE), 
+                                       sd(x, na.rm=TRUE)),
+                         simplify = FALSE) |> bind_rows()
+ttest_means_sd <- t(test_means_sd)
+#knitr::kable(ttest_means_sd, digits = 5, caption = "Test Data, metrics to compare to training", col.names = c("Columns", "Mean", "SD"))
+
+
+## kable tables for hw 5
+
+train_means <- round(c(mean(train$Negligent.manslaughter_all_campus),
+           mean(train$Sex.offenses...Forcible_all_campus),
+           mean(train$Rape_all_campus),
+           mean(train$Fondling_all_campus),
+           mean(train$Sex.offenses...Non.forcible_all_campus),
+           mean(train$Incest_all_campus),
+           mean(train$Statutory.rape_all_campus),
+           mean(train$Robbery_all_campus),
+           mean(train$Burglary_all_campus),
+           mean(train$Motor.vehicle.theft_all_campus),
+           mean(train$Arson_all_campus)), 3)
+
+train_sds <- round(c(
+  sd(train$Negligent.manslaughter_all_campus),
+  sd(train$Sex.offenses...Forcible_all_campus),
+  sd(train$Rape_all_campus),
+  sd(train$Fondling_all_campus),
+  sd(train$Sex.offenses...Non.forcible_all_campus),
+  sd(train$Incest_all_campus),
+  sd(train$Statutory.rape_all_campus),
+  sd(train$Robbery_all_campus),
+  sd(train$Burglary_all_campus),
+  sd(train$Motor.vehicle.theft_all_campus),
+  sd(train$Arson_all_campus)
+), 3)
+
+train_pres <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+               "Arson"),
+  Mean = train_means,
+  StandardDeviation = train_sds
+)
+
+knitr::kable(train_pres, caption = "Training Data", col.names = c("Variable", "Mean", "SD"))
+
+test_means <- round(c(mean(test$Negligent.manslaughter_all_campus),
+           mean(test$Sex.offenses...Forcible_all_campus),
+           mean(test$Rape_all_campus),
+           mean(test$Fondling_all_campus),
+           mean(test$Sex.offenses...Non.forcible_all_campus),
+           mean(test$Incest_all_campus),
+           mean(test$Statutory.rape_all_campus),
+           mean(test$Robbery_all_campus),
+           mean(test$Burglary_all_campus),
+           mean(test$Motor.vehicle.theft_all_campus),
+           mean(test$Arson_all_campus)), 3)
+
+test_sds <- round(c(
+  sd(test$Negligent.manslaughter_all_campus),
+  sd(test$Sex.offenses...Forcible_all_campus),
+  sd(test$Rape_all_campus),
+  sd(test$Fondling_all_campus),
+  sd(test$Sex.offenses...Non.forcible_all_campus),
+  sd(test$Incest_all_campus),
+  sd(test$Statutory.rape_all_campus),
+  sd(test$Robbery_all_campus),
+  sd(test$Burglary_all_campus),
+  sd(test$Motor.vehicle.theft_all_campus),
+  sd(test$Arson_all_campus)
+), 3)
+
+test_pres <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+               "Arson"),
+  Mean = test_means,
+  StandardDeviation = test_sds
+)
+
+knitr::kable(test_pres, caption = "Test Data", col.names = c("Variable", "Mean", "SD"))
 ```
 
 

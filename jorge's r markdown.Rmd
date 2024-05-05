@@ -440,6 +440,7 @@ ggplot() +
   ggtitle("Dendrogram Produced from Hierarchical Clustering, Method of Averaging")
 ```
 
+INCLUDE THIS PART DOWN HERE 
 
 ## will try K means clustering, getting too many clusters from hierarchical clustering
 
@@ -479,7 +480,7 @@ sc_plot +
   )
 ```
 
-
+THIS TOO 
 
 ## Now plotting with the optimal number of clusters
 ```{r, cache=TRUE}
@@ -497,6 +498,7 @@ ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color 
   labs(color = "Cluster #")
 ```
 
+ALSO THIS 
 
 ```{r}
 idx <- which(km.out$cluster == 5)
@@ -625,7 +627,7 @@ ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color 
 
 ```
 
-
+INCLUDE THIS DOWN HERE 
 
 
 ## Most Recent Attempt 
@@ -651,7 +653,8 @@ kable(avg_sil_scores_by_cluster, format = "markdown",
         caption = "Average Silhouette Scores by Cluster")
 ```
 
-x
+NOT THIS DOWN HERE 
+
 ```{r}
 ggplot(data_frame, aes(x = factor(cluster), y = sil_width, fill = factor(cluster))) +
   geom_boxplot() +
@@ -659,12 +662,15 @@ ggplot(data_frame, aes(x = factor(cluster), y = sil_width, fill = factor(cluster
   theme_minimal()
 ```
 
+NOT THIS EITHER 
+
 ```{r}
 plot(sil, col = 1:5, border = NA)
 ```
 
 # 3D Plot !!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
+INCLUDE THIS DOWN HERE AND THATS IT I THINK 
 
 ```{r}
 #library(plotly)

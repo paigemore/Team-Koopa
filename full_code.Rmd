@@ -1,34 +1,50 @@
 ---
-title: "paige r markdown"
-output:
-  pdf_document: default
-  html_document: default
-date: "2024-02-28"
+title: "Full Code"
+output: pdf_document
+date: "2024-05-05"
 ---
-
 ```{r setup, include=FALSE}
+# # # # # #
+# SET UP ##
+# # # # # #
+
 knitr::opts_chunk$set(echo = TRUE)
 
-#libraries
+# # # # # # # # #
+## Load Libraries
+
 library(dplyr)
 library(ggplot2)
-
-# kable
 library(knitr)
-
 library(tidyr)
 library(tidyverse)
+
+library(ggdendro)
+library(factoextra)
+library(gridExtra)
+library(Metrics)
+library(cluster)
+
+options(repos = "https://cloud.r-project.org")
+library(xgboost)
 ```
 
-# data cleaning
+# Data Cleaning
 
-## data combination from jorge
+## Data Combination
 
-```{r jorges code for data combination}
+```{r data combination}
+
+# # # # # # # # # 
+# DATA CLEANING #
+# # # # # # # # #
+
+# # # # # # # # # # # #
+## Combine 12 Datasets
 
 "C:/Users/paige/OneDrive/Documents/STAT 472/Team-Koopa/not combined csv files"
 
-getwd()
+#getwd()
 
 setwd("C:/Users/paige/OneDrive/Documents/STAT 472/Team-Koopa/not combined csv files")
 
@@ -112,11 +128,12 @@ dataset <- data1 |> left_join(data2) |>
 
 
 
-## remove useless cols
+## Removing Useless Columns
 
-removing NA values, removing useless columns
+```{r remove cols}
 
-```{r data cleaning}
+# # # # # # # # # # # # # #
+## Removing Useless Columns
 
 #remove NAs
 dataset[is.na(dataset)] <- 0
@@ -132,23 +149,28 @@ cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing"
 cleaned <- dataset[, !names(dataset) %in% cols_to_remove]
 ```
 
-## remove campuses
+## Remove Campuses
 
 Removes campuses outside of Colorado.
 
-```{r}
+```{r remove campuses}
 
-### note!! i had to change the full dataset name from cleaned_data to cleaned (see last line in the chunk above) ###
+# # # # # # # # # # # # # # # # #
+## Remove Campuses Outside of CO
 
+# had to split into 3 vectors otherwise it's too long
 to_remove1 <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport")
 
 #check vector length
 #length(to_remove1)
 
+# check to see if campus name is in there
 matches <- unique(grep(paste(to_remove1,collapse="|"), 
                         cleaned$Campus.Name_all_campus, value=TRUE))
+# new dataset which excludes campuses from remove_1
 cleaned_1 <- cleaned |> filter(!Campus.Name_all_campus %in% matches)
 
+# same process as above
 to_remove2 <- c("Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast) Metropolitan Campus", "Fort Sill", "Vance", "Westport Plaza", "Lackland Air Force Base", "Columbia", "Coast Guard", "Merrit Island", "Vandenberg AFB")
 
 #length(to_remove2)
@@ -163,6 +185,8 @@ to_remove3 <- c("Webster University St. Louis-Main Campus", "Space Coast", "Fort
 
 matches <- unique(grep(paste(to_remove3,collapse="|"), 
                         cleaned_2$Campus.Name_all_campus, value=TRUE))
+
+# final cleaned dataset
 cleaned_data <- cleaned_2 |> filter(!Campus.Name_all_campus %in% matches)
 
 
@@ -172,41 +196,98 @@ cleaned_data <- cleaned_2 |> filter(!Campus.Name_all_campus %in% matches)
 ```
 
 
-
-## tests
-
-```{r tests}
-mean(cleaned_data$Institution.Size_all_campus)
-
-#cleaned_data |> mutate(Institution.name_all_campus = as.factor(Institution.name_all_campus)) |> group_by(Institution.name_all_campus, Survey.year) |>
- # summarize(num = length(unique(Campus.Name_all_campus)))
-
-```
-## summary stats
+# Summary Statistics and EDA
 
 ```{r sum stat 1}
+
+# # # # # # # # # # # # # ##
+# SUMMARY STATISTICS & EDA #
+# # # # # # # # # # # # # ##
 
 #new column combining liquor law violations across disciplinary, arrests and location (public, stuhousing, campus, noncampus)
 cleaned_data$all_liquor_violations <- cleaned_data$Liquor.law.violations_arrests_campus + cleaned_data$Liquor.law.violations_arrests_noncampus + cleaned_data$Liquor.law.violations_arrests_public + cleaned_data$Liquor.law.violations_arrests_stuhousing + cleaned_data$Liquor.law.violations_disciplinary_campus + cleaned_data$Liquor.law.violations_disciplinary_housing + cleaned_data$Liquor.law.violations_disciplinary_noncampus + cleaned_data$Liquor.law.violations_disciplinary_public
 
 numeric_data <- select(cleaned_data, where(is.numeric))
 
-# figure margins too large
-#pairs(numeric_data)
+# # # # # # # # # # # # # #
+## Institution Size v. TLV
 
-ggplot(cleaned_data, aes(y=Institution.Size_all_campus, x=all_liquor_violations)) +
-  geom_point() +
-  geom_smooth(method = "lm")
+institution_size <- ifelse(cleaned_data$Institution.Size_all_campus > 15000, "Large", "Small")
 
-#cleaned_data$all_liquor_violations[16]
+ggplot(cleaned_data, aes(x = institution_size, y = all_liquor_violations, fill = institution_size)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  labs(title = "Comparison of Institution Size With Mean Liquor Law Violations",
+       x = "Institution Size",
+       y = "Mean Liquor Violations") +
+  scale_fill_manual(values = c("Large" = "skyblue", "Small" = "darkblue")) +  # Set custom fill colors
+  theme_minimal() +
+  theme(legend.position = "none")  # Remove legend
+
+# # # # # # # # # # # # # # # # # # # #
+## Plot of Colleges w/ 1000+ Violations
+
+cleaned_data |> filter(all_liquor_violations > 1000) |>
+ ggplot() +
+  geom_point(aes(x = Institution.name_all_campus, y = all_liquor_violations),
+             color = "black") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Liquor Law Violations Per College Campus (Schools with 1000+ Violations)") +
+  xlab("Institution") + ylab("Liquor Violations") 
+
+
+# # # # # # # # # # # # # # # # # # # # # # #
+## Kable Table for Means and SD of variables
+
+# Sample data creation (assuming 'cleaned' is your data frame)
+means <- round(c(mean(cleaned_data$Negligent.manslaughter_all_campus),
+                 mean(cleaned_data$Sex.offenses...Forcible_all_campus),
+                 mean(cleaned_data$Rape_all_campus),
+                 mean(cleaned_data$Fondling_all_campus),
+                 mean(cleaned_data$Sex.offenses...Non.forcible_all_campus),
+                 mean(cleaned_data$Incest_all_campus),
+                 mean(cleaned_data$Statutory.rape_all_campus),
+                 mean(cleaned_data$Robbery_all_campus),
+                 mean(cleaned_data$Burglary_all_campus),
+                 mean(cleaned_data$Motor.vehicle.theft_all_campus),
+                 mean(cleaned_data$Arson_all_campus)), 3)
+
+sds <- round(c(
+  sd(cleaned_data$Negligent.manslaughter_all_campus),
+  sd(cleaned_data$Sex.offenses...Forcible_all_campus),
+  sd(cleaned_data$Rape_all_campus),
+  sd(cleaned_data$Fondling_all_campus),
+  sd(cleaned_data$Sex.offenses...Non.forcible_all_campus),
+  sd(cleaned_data$Incest_all_campus),
+  sd(cleaned_data$Statutory.rape_all_campus),
+  sd(cleaned_data$Robbery_all_campus),
+  sd(cleaned_data$Burglary_all_campus),
+  sd(cleaned_data$Motor.vehicle.theft_all_campus),
+  sd(cleaned_data$Arson_all_campus)
+), 3)
+
+# Creating data frame
+summary_df <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+                "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+                "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+                "Arson"),
+  Mean = means,
+  StandardDeviation = sds
+)
+
+# Sorting the data frame by Mean in descending order
+sorted_summary_df <- summary_df %>%
+  arrange(desc(Mean), desc(StandardDeviation))
+
+# Creating the kable
+knitr::kable(sorted_summary_df, caption = "Average Values of Different Campus Offenses",
+             col.names = c("Variables", "Average", "Standard Deviation"))
+
+
+# # # # # # # # # # # # # #
+## Barplot of TLV vs. Year
 
 year_factor <- as.factor(cleaned_data$Survey.year)
-
-#ggplot(cleaned_data, aes(x=year_factor, y=all_liquor_violations)) + 
- # geom_bar(stat= "identity", aes(fill=year_factor)) +
-  #xlab("Year") +
-  #ylab("Liquor Law Violations") +
-  #ggtitle("Barplot of Total Liquor Violations v. Year")
 
 ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year_factor)) +
   geom_bar(stat = "identity") +
@@ -214,34 +295,8 @@ ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year
   ggtitle("Barplot of Total Liquor Violations vs. Year") +
   theme(legend.position = "none")
 
-
-#ggplot(cleaned_data, aes(Institution.Size_all_campus)) +
- # geom_histogram() +
- # xlab("Institution Enrollment") +
- # ylab("Count of Campuses") +
- # ggtitle("Histogram of Institution Size")
-
-#small_inst <- cleaned_data$Institution.Size_all_campus <= 15000
-#large_inst <- cleaned_data$Institution.Size_all_campus >= 15001
-#large_inst <- cleaned_data$Institution.Size_all_campus >= 20000
-
-#size_data <- data.frame()
-
-#size_table <- data.frame(
- # Small = sum(small_inst),
- # Large = sum(large_inst)
-#)
-
-#kable(size_table, caption = "Institution Sizes")
-
-#ggplot(cleaned_data, aes(y=all_liquor_violations, x=unique_id)) +
-  #geom_boxplot()
-
-#summary(lm(all_liquor_violations ~ ., data= cleaned_data)) +
-#knitr::kable(digits=c(3,3,3,3),
-#caption ="Simple Linear Regression Model Estimating Liquor Violations from All Predictors")
-
 ```
+
 # split data
 
 ```{r}
@@ -356,11 +411,315 @@ knitr::kable(test_pres, caption = "Test Data", col.names = c("Variable", "Mean",
 
 ```
 
+# XGBoost
 
-# neural network
+```{r XGBoost}
+
+# # # # # #
+# XGBOOST #
+# # # # # #
+
+# # # # # # # # # # # # # # # # # #
+## Find Predictors Relevant to Data
+
+# Ensure train is a data frame
+if (!is.data.frame(train)) {
+  stop("train must be a data frame.")
+}
+
+# Exclude specified columns
+excluded_columns <- c("Survey.year", "Unitid_all_campus", 
+                      "OPEID_all_campus", "Campus.ID_all_campus", "Campus.Name_all_campus", 
+                      "Institution.Size_all_campus")
+
+# Select only numeric columns (excluding the excluded columns)
+numeric_train <- train[, sapply(train, is.numeric) & 
+                       !(names(train) %in% excluded_columns)]
+
+# Calculate the sum of each numeric column
+column_sums <- colSums(numeric_train, na.rm = TRUE)
+
+# Sort the column sums from most to least
+sorted_column_sums <- sort(column_sums, decreasing = TRUE)
+
+# Print the sorted column sums
+print(sorted_column_sums)
+
+# # # # # # # # # # #
+## Correlation Tests
+
+# Check the data types of the columns
+class(train$Arson_crim_offense_noncampus)
+class(train$all_liquor_violations)
+
+# If any of the columns are not numeric, convert them to numeric
+train$Arson_crim_offense_noncampus <- as.numeric(train$Arson_crim_offense_noncampus)
+train$all_liquor_violations <- as.numeric(train$all_liquor_violations)
+
+# Perform Pearson's correlation test
+correlation_result <- cor.test(train$Arson_crim_offense_noncampus, train$all_liquor_violations)
+
+# Format the correlation test result
+formatted_result <- sprintf("Correlation test result:
+  - t-value = %.3f
+  - degrees of freedom = %d
+  - p-value = %s
+  - correlation estimate = %.3f
+  - 95 percent confidence interval: [%.3f, %.3f]",
+  correlation_result$statistic,
+  correlation_result$parameter,
+  format(correlation_result$p.value),
+  correlation_result$estimate,
+  correlation_result$conf.int[1],
+  correlation_result$conf.int[2]
+)
+
+# Print the formatted result
+cat(formatted_result)
+
+# # # # # # # # # #
+## Developing Model
+
+# Using variables with a positive linear relationship with "all_liquor_violations"
+# Define the selected variables for modeling
+selected_vars <- c(
+  "Liquor.law.violations_disciplinary_campus",
+  "Liquor.law.violations_disciplinary_housing",
+  "Drug.law.violations_disciplinary_campus",
+  "Drug.law.violations_disciplinary_housing",
+  "Liquor.law.violations_arrests_campus",
+  "Drug.law.violations_arrests_campus",
+  "Liquor.law.violations_arrests_stuhousing",
+  "Drug.law.violations_arrests_stuhousing",
+  "Burglary_all_campus",
+  "Liquor.law.violations_disciplinary_noncampus",
+  "Drug.law.violations_arrests_public",
+  "Liquor.law.violations_arrests_public",
+  "Motor.vehicle.theft_all_campus",
+  "Burglary_student_housing",
+  "Rape_all_campus",
+  "Drug.law.violations_disciplinary_noncampus",
+  "Rape_student_housing",
+  "Liquor.law.violations_disciplinary_public",
+  "Fondling_all_campus",
+  "Aggravated.assault_all_campus",
+  "Liquor.law.violations_arrests_noncampus",
+  "Drug.law.violations_arrests_noncampus",
+  "Motor.vehicle.theft_crim_offense_public",
+  "Robbery_crim_offense_public",
+  "Illegal.weapons.possession_arrests_campus",
+  "Aggravated.assault_crim_offense_public",
+  "Fondling_student_housing",
+  "Sex.offenses...Forcible_all_campus",
+  "Illegal.weapons.possession_disciplinary_campus",
+  "Illegal.weapons.possession_arrests_public",
+  "Robbery_all_campus",
+  "Sex.offenses...Forcible_student_housing",
+  "Arson_all_campus",
+  "Illegal.weapons.possession_disciplinary_housing",
+  "Burglary_crim_offense_noncampus",
+  "Drug.law.violations_disciplinary_public",
+  "Aggravated.assault_student_housing",
+  "Arson_student_housing",
+  "Motor.vehicle.theft_crim_offense_noncampus",
+  "Fondling_crim_offense_public",
+  "Sex.offenses...Forcible_crim_offense_public",
+  "Aggravated.assault_crim_offense_noncampus",
+  "Rape_crim_offense_noncampus",
+  "Fondling_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_stuhousing",
+  "Sex.offenses...Forcible_crim_offense_noncampus",
+  "Rape_crim_offense_public",
+  "Arson_crim_offense_public",
+  "Robbery_crim_offense_noncampus",
+  "Illegal.weapons.possession_arrests_noncampus",
+  "Arson_crim_offense_noncampus"
+)
+
+# Subset the data with selected variables
+# This step extracts only the columns from the dataset that are relevant for the analysis or modeling task.
+# It filters out unnecessary or redundant features, focusing the analysis on the variables thought to have the most impact on the target variable.
+# This helps simplify the dataset, improves model interpretability, and potentially enhances model performance by reducing noise and overfitting.
+train_subset <- train[selected_vars]
+
+# Extract the target variable
+# This step isolates the target variable "all_liquor_violations".
+# "all_liquor_violations" represents the outcome that the model learns to predict based on the input features.
+# By separating the target variable, the modeling process can focus on understanding the relationships between the input features and the target outcome.
+y_train <- train$all_liquor_violations
+
+# Train an ensemble model using XGBoost
+# This step builds a predictive model using the XGBoost algorithm.
+# The model is trained on the selected variables and the target variable.
+# Hyperparameters like nrounds and verbose are specified to control the training process.
+# Higher values for nrounds allow the model to learn more complex patterns in the data but may increase the risk of overfitting.
+xgb_model <- xgboost(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 100, 
+                     verbose = 0)
+xgb_validation1 <- xgb.cv(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 100, 
+                     nfold = 10,
+                     verbose = 0)
+# do 5 for nrounds
+
+# # # # # # # # # # #
+## Plot for N-Rounds
+
+# Print the trained model
+print("Trained XGBoost Model:")
+print(xgb_model)
+print(xgb_validation1)
+
+eval_metrics <- xgb_validation1$evaluation_log
+plot(eval_metrics$iter, eval_metrics$train_rmse_mean, 
+     xlim = c(0,20),
+     xlab = "Iterations",
+     ylab = "Mean RMSE",
+     main = "Mean RMSE vs. Iterations Interaction") # train
+points(eval_metrics$iter, eval_metrics$test_rmse_mean, col = "red") # test
+legend("topright", legend = c("Training RMSE", "Test RMSE"),
+       col = c("black", "red"),
+       pch = c(1,1),
+       cex = 0.8,
+       bg = "white",
+       box.lty = 0)
+
+# # # # # # # # # # #
+## Model Evaluation
+
+xgb_model <- xgboost(data = as.matrix(train_subset), 
+                     label = y_train, 
+                     nrounds = 5, 
+                     verbose = 0)
+
+test_subset <- test[selected_vars]
+test_predictions <- predict(xgb_model, as.matrix(test_subset))
+test_rmse <- sqrt(mean((test_predictions - test$all_liquor_violations)^2))
+cat("Test RMSE:", test_rmse, "\n")
+
+```
+
+
+
+# K-Means Clustering
+
+```{r}
+
+# # # # # # # # # # ##
+# K-MEANS CLUSTERING #
+# # # # # # # # # # ##
+
+alc_2cols1 <- train_num[ , c("all_liquor_violations", "Institution.Size_all_campus")]
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = 3, nstart = 20)
+km.out
+
+# # # # # # # # # # # # # # # # # # # #
+## Finding Optimal Number of Clusters
+
+nclust <- 10
+wss <- numeric(nclust)
+set.seed(421)
+## Looping through different number of clusters 
+for (i in 1:nclust) {
+  km.out <- kmeans(alc_2cols1, centers = i, nstart = 20)
+  wss[i] <- km.out$tot.withinss
+}
+
+## Plotting 
+wss_df <- tibble(clusters = 1:nclust, wss = wss)
+sc_plot <- ggplot(wss_df, aes(x = clusters, y = wss, group = 1)) +
+  geom_point(size = 3) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2, 4, 6, 8, 10)) +
+  scale_y_continuous(labels = scales::comma) +
+  xlab("Number of Clusters") +
+  ylab("Within Cluster Sum of Squares") +
+  ggtitle("Optimal Number of Clusters, Scree Plot")
+sc_plot +
+  geom_hline(
+    yintercept = wss,
+    linetype = 'dashed',
+    col = c(rep('black',4),'red', rep('black', 5))
+  )
+
+# # # # # # # # # # # # # # # # # # # #
+## Plotting Optimal Number of Clusters
+
+k <- 5
+
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = k, nstart = 20)
+
+train_num$cluster_id <- factor(km.out$cluster)
+ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color = cluster_id)) +
+    geom_point(alpha = 0.40) +
+    xlab("Institution Size (Number of Students Enrolled)") +
+    ylab("Liquor Violations") +
+  ggtitle("Plot of Clustered Liquor Law Violations by Institution Size") +
+  labs(color = "Cluster #")
+
+
+
+idx <- which(km.out$cluster == 5)
+train[idx,]$Institution.name_all_campus
+
+
+idx <- km.out$cluster
+idx <- which(km.out$cluster == 5)
+train[idx,]
+train[idx,]$Institution.name_all_campus
+
+
+# # # # # # # # # # # # # # # # #
+## Clustering with 2 Predictors
+
+test_num <- test |> as_tibble() |> select(-where(is.character))
+test_num <- test_num[, !names(test_num) %in% c('Unitid_all_campus', 'OPEID_all_campus', 'Campus.ID_all_campus')]
+cols_test <- train_num[ , c("all_liquor_violations", "Survey.year", "Institution.Size_all_campus")]
+
+kmTEST <- kmeans(cols_test, centers = k, nstart = 20)
+
+sil <- silhouette(kmTEST$cluster, dist(train_num))
+
+data_frame <- data.frame(sil_width = sil[, "sil_width"],
+                         cluster = sil[, "cluster"])
+avg_sil_scores_by_cluster <- data_frame %>%
+  group_by(cluster) %>%
+  summarise(avg_silhouette = mean(sil_width))
+print(avg_sil_scores_by_cluster)
+kable(avg_sil_scores_by_cluster, format = "markdown", 
+      col.names =c("Cluster", "Average Silhouette Score"),
+        caption = "Average Silhouette Scores by Cluster")
+
+# # # # # #
+## 3D Plot
+
+#library(plotly)
+
+#fig <- plot_ly(train_num, x = ~Institution.Size_all_campus, y = ~Survey.year, z = ~all_liquor_violations, type = 'scatter3d', mode = 'markers', color = ~cluster_id2)
+#fig <- fig %>% layout(title = "Cluster Plot of Institution Size and Survey Year",
+          #            scene = list(xaxis = list(title = "Institution Size"),
+           #                        yaxis = list(title = "Survey Year"),
+            #                       zaxis = list(title = "Liquor Law Violations")))
+#fig
+```
+
+
+# Neural Network
 
 ### plot.nnet
-```{r plot nnet}
+```{r Neural Network}
+
+# # # # # # # # ##
+# NEURAL NETWORK #
+# # # # # # # # ##
+
+# # # # # # # # # # # # # # # # # # # #
+## Plot Function for Clean NN Plotting
+
 ## for plot.nnet()
 #install.packages("devtools")
 library(devtools)
@@ -746,10 +1105,9 @@ plot.nnet <- function(mod.in,nid=T,all.out=T,all.in=T,bias=T,wts.only=F,rel.rsc=
   if(bias) bias.points(bias.x,bias.y,'B')
   
 }
-```
 
-### fit lasso for predictors
-```{r fit lasso, cache = TRUE}
+# # # # # # # # # # # # # # #
+## Fit LASSO For Predictors
 
 set.seed(4242)
 
@@ -815,30 +1173,14 @@ lc_df_clean <- lc_df_filtered[-1]
 #lc_df_clean
 
 lc_table_df <- data.frame(
-  Variable = c("Rape (student housing)", "Fondling (student housing)", "Burglary (student housing)", "Arson (student housing)", "Burglary (noncampus)", "Drug Law Violations (arrests, campus)", "Drug Law Violations (arrests, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
+  Variable = c("Institution Size", "Sex Offenses (all campus)", "Arson (all campus)", "Rape (student housing)", "Fondling (student housing)", "Robbery (student housing)", "Assault (student housing)", "Burglary (student housing)", "Vehicle Theft (student housing)", "Arson (student housing)", "Assault (criminal offense, noncampus)", "Vehicle Theft (criminal offense, noncampus)", "Arson (criminal offense, noncampus)", "Sex Offenses (criminal offense, public)", "Fondling (criminal offense, public)", "Drug Law Violations (arrest, student housing)", "Drug Law Violations (arrest, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
   Coefficients = lc_df_clean)
 
 #table of lasso coefficients
 knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
 
-```
-
-best_lambda = 17.44531
-lasso coefficients found are liquor.law.violations... -> must remove these cols
-
-Coeffs found: Rape_student_housing
-Fondling_student_housing
-Burglary_student_housing
-Arson_student_housing
-Burglary_crim_offense_noncampus
-Drug.law.violations_arrests_camps
-Drug.law.violations_arrests_noncampus
-Drug.law.violations_disciplinary_campus
-
-### fit nets
-
-```{r fit nn, cache=TRUE}
-## potential libraries
+# # # # # #
+## Fit NNs
 
 #install.packages("keras")
 library(keras)
@@ -853,66 +1195,6 @@ library(neuralnet)
 #get plots side by side, grid.arrange()
 #install.packages("gridExtra")
 library(gridExtra)
-
-#for dredge() 
-#install.packages("MuMIn")
-library(MuMIn)
-
-# set seed for reproducibility
-set.seed(4242)
-
-snn_1 <- neuralnet(all_liquor_violations ~ Institution.Size_all_campus + Survey.year, data = train, hidden = 2, linear.output = TRUE)
-
-#plot(snn_1, rep= "best")
-
-plot.nnet(snn_1, x.lab = c("Size", "Year"), y.lab = "TLV")
-title("Neural Network (2 hidden layers)")
-
-#snn_3 <- neuralnet(all_liquor_violations ~ Institution.Size_all_campus + Survey.year , data = train, hidden = 3, linear.output = TRUE)
-
-#plot(snn_3)
-
-#par(mfrow = c(1,2))
-#plot1 <- plot(snn_3, rep = "best")
-#plot2 <- plot.nnet(snn_3)
-#grid.arrange(plot1, plot2, nrow = 1)
-
-#snn_2 <- neuralnet(all_liquor_violations ~. - Unitid_all_campus - OPEID_all_campus - Campus.ID_all_campus, data=train_num, hidden = 2, linear.output= TRUE)
-
-#plot(snn_2)
-
-#plot.nnet(snn_2)
-
-#train_num_nomiss <- train_num %>%
- # mutate(train_num = if_else(is.na(train_num), "Other", train_num)) %>%
-  #drop_na()
-
-
-train_num <- na.omit(train_num)
-
-# AIC trials -- using predictors selected by LASSO
-
-options(na.action = "na.fail")
-full_model <- lm(all_liquor_violations ~ Rape_student_housing + Fondling_student_housing + Burglary_student_housing + Arson_student_housing + Burglary_crim_offense_noncampus + Drug.law.violations_arrests_campus + Drug.law.violations_arrests_noncampus + Drug.law.violations_disciplinary_campus + Drug.law.violations_disciplinary_housing, data = train_num)
-model_dredge <- dredge(full_model, rank = "AIC", extra = c("R^2"))
-head(model_dredge)
-
-
-# NN test to see when model breaks
-#NN_1 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Drug.law.violations_arrests_noncampus,
-                  #data = train, hidden = 1, linear.output = TRUE)
-
-#NN_2 <- neuralnet(all_liquor_violations ~ Rape_student_housing, hidden = 1, data = train, linear.output = TRUE)
-
-#NN_3 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing, data = train, hidden = 1, linear.output=TRUE)
-
-#NN_4 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing, data = train, hidden = c(1, 2), linear.output=TRUE)
-
-#NN_model <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Burglary_crim_offense_noncampus + Drug.law.violations_arrests_campus + Drug.law.violations_arrests_noncampus + Drug.law.violations_disciplinary_campus + Drug.law.violations_disciplinary_housing, data = train, hidden = 10, linear.output = TRUE)
-
-w <- NN_model$weights
-w
-
 
 # NN test to see when model breaks
 NN_1 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Drug.law.violations_arrests_noncampus,
@@ -950,89 +1232,49 @@ title("Model 5")
 plot.nnet(NN_6, x.lab = c("Rape", "Burglary", "Drug LV"), y.lab = "TLV")
 title("Model 6")
 
+
+# # # # # # #
+## NN RMSEs
+
+library(modelr)
+
+## test rmse
+
+nn_rmse <- data.frame(
+  rmse_1 <- rmse(NN_1, data=test),
+  rmse_2 <- rmse(NN_2, data=test),
+  rmse_3 <- rmse(NN_3, data=test),
+  rmse_4 <- rmse(NN_4, data=test),
+  rmse_5 <- rmse(NN_5, data=test),
+  rmse_6 <- rmse(NN_6, data=test)
+)
+
+new_rmse <- t(nn_rmse)
+
+rmse_table <- data.frame(
+  Variable = c("1", "2", "3", "4", "5", "6"),
+  Coefficients = new_rmse)
+
+rownames(rmse_table) <- NULL
+
+rmse_table
+
+kable(rmse_table, col.names = c("Model #", "Test RMSE"), caption = "Neural Network Model Evaluations", digits = 3)
+
+```
+
+# Conclusion
+
+```{r conclusion}
+# # # # # # ## 
+# CONCLUSION #
+# # # # # # ##
+
+final_rmse <- data.frame(
+  Variable = c("XGBoost", "Neural Net"),
+  Coefficients = c("164.725", "417.546"))
+
+kable(final_rmse, col.names = c("Method", "Test RMSE"), caption = "Final Model Evaluations", digits = 3)
 ```
 
 
-AIC selection from model selected by LASSO: incl. all but burglary_crim_offense_noncampus
-
-Interpreting plot.nn() output: gray lines indicate negative weight, black: pos weight. the thicker the lines, the greater the |weight|.
-
-# test model(s)
-
-```{r test}
-#predicted <- predict(NN_1, test, type = "response")
-
-# Assuming you've already trained your neural network model and have test data
-# For demonstration purposes, let's assume 'model' is your trained neural network model
-# and 'test_data' is your test data with predictors (features) and actual values
-
-# Make predictions using the neural network model
-
-## NN model 1
-predictions_1 <- predict(NN_1, test)
-
-# Calculate Mean Squared Error
-rmse_1 <- sqrt(mean((test$all_liquor_violations - predictions_1)^2))
-
-rmse_1
-
-
-## NN model 2
-
-predictions_2 <- predict(NN_2, test)
-mse_2 <- mean((test$all_liquor_violations - predictions_2)^2)
-
-mse_2
-
-
-## NN model 3
-
-predictions_3 <- predict(NN_3, test)
-mse_3 <- mean((test$all_liquor_violations - predictions_3)^2)
-
-mse_3
-
-
-## NN model 4
-
-predictions_4 <- predict(NN_4, test)
-mse_4 <- mean((test$all_liquor_violations - predictions_3)^2)
-
-mse_3
-```
-
-
-## this code is useless
-
-```{r this code is useless}
-
-#read CSV files
-
-#arrests_local_state_police <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Local_State_Police.csv")
-
-#arrests_noncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_Noncampus.csv")
-
-#arrests_oncampus <- read.csv("C:/Users/paige/Downloads/OPE CSS Custom Data 2024-02-28 171746/Arrests_On_campus.csv")
-
-##problem: need to combine based on university and campus - make new id
-
-# Create a new column by combining "userID" and "campusID"
-#arrests_local_state_police$new_ID <- paste(arrests_local_state_police$Unitid, arrests_local_state_police$Campus.ID, sep = "-")
-
-#arrests_noncampus$new_ID <- paste(arrests_noncampus$Unitid, arrests_noncampus$Campus.ID, sep = "-")
-
-# Add source column
-
-#arrests_local_state_police$source <- "Local_State_Police"
-#arrests_noncampus$source <- "Noncampus"
-
-# combine data frames
-
-#arrests_combined_1 <- rbind(arrests_local_state_police, arrests_noncampus)
-
-#arrests_combined_1 <- bind_rows(arrests_local_state_police, arrests_noncampus)
-
-# write combined data to CSV
-
-#write.csv(arrests_combined_1, "arrests_combined_1.csv", row.names=FALSE)
-```
