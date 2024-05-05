@@ -899,7 +899,7 @@ head(model_dredge)
 
 # NN test to see when model breaks
 NN_1 <- neuralnet(all_liquor_violations ~ Rape_student_housing + Burglary_student_housing + Arson_student_housing + Drug.law.violations_arrests_noncampus,
-                  data = train, hidden = 1, linear.output=TRUE)
+                  data = train, hidden = 1, linear.output = TRUE)
 
 NN_2 <- neuralnet(all_liquor_violations ~ Rape_student_housing, hidden = 1, data = train, linear.output = TRUE)
 
@@ -938,9 +938,9 @@ Interpreting plot.nn() output: gray lines indicate negative weight, black: pos w
 predictions_1 <- predict(NN_1, test)
 
 # Calculate Mean Squared Error
-mse_1 <- mean((test$all_liquor_violations - predictions_1)^2)
+rmse_1 <- sqrt(mean((test$all_liquor_violations - predictions_1)^2))
 
-mse_1
+rmse_1
 
 
 ## NN model 2
