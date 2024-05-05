@@ -220,25 +220,31 @@ cat("Test RMSE:", test_rmse, "\n")
 
 # zooming in on the evaluation
 ```{r}
-plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
+#plot(eval_metrics$iter, eval_metrics$train_rmse, xlim = c(0,15))
 ```
 
 # Evaluation pt 2 (might go with this one)
 ```{r}
-xgb_validation2 <- xgb.cv(data = as.matrix(train_subset), 
+# xgb_validation2 <- xgb.cv(data = as.matrix(train_subset), 
                      label = y_train, 
                      nrounds = 5, 
                      nfold = 10,
                      verbose = 0)
-print(xgb_validation2)
+# print(xgb_validation2)
 ```
 
-# looking at the evalution pt 2
-```{r}
-eval_metrics2 <- xgb_validation2$evaluation_log
-plot(eval_metrics2$iter, eval_metrics2$train_rmse_mean) # train
-points(eval_metrics2$iter, eval_metrics2$test_rmse_mean, col = "red") # test
 
+
+
+
+
+
+
+# looking at the evalution pt 2 (don't use)
+```{r}
+#eval_metrics2 <- xgb_validation2$evaluation_log
+#plot(eval_metrics2$iter, eval_metrics2$train_rmse_mean) # train
+#points(eval_metrics2$iter, eval_metrics2$test_rmse_mean, col = "red") # test
 
 ```
 
