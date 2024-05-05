@@ -40,11 +40,11 @@ library(xgboost)
 # # # # # # # # #
 
 # # # # # # # # # # # #
-## Combine 12 Datasets
+## Combine 12 Data sets
 
 "C:/Users/paige/OneDrive/Documents/STAT 472/Team-Koopa/not combined csv files"
 
-#getwd()
+getwd()
 
 setwd("C:/Users/paige/OneDrive/Documents/STAT 472/Team-Koopa/not combined csv files")
 
@@ -299,7 +299,7 @@ ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year
 
 # split data
 
-```{r}
+```{r split data}
 set.seed(4242)
 
 ## split cleaned data into 25/75
@@ -605,11 +605,13 @@ cat("Test RMSE:", test_rmse, "\n")
 
 # K-Means Clustering
 
-```{r}
+```{r k means clustering}
 
 # # # # # # # # # # ##
 # K-MEANS CLUSTERING #
 # # # # # # # # # # ##
+
+train_num <- train |> as_tibble() |> select(-where(is.character))
 
 alc_2cols1 <- train_num[ , c("all_liquor_violations", "Institution.Size_all_campus")]
 set.seed(421)
@@ -710,7 +712,6 @@ kable(avg_sil_scores_by_cluster, format = "markdown",
 
 # Neural Network
 
-### plot.nnet
 ```{r Neural Network}
 
 # # # # # # # # ##
@@ -1115,7 +1116,7 @@ set.seed(4242)
 #install.packages("glmnet")
 library(glmnet)
 
-train_num <- dplyr::select_if(new_train, is.numeric)
+train_num <- dplyr::select_if(train, is.numeric)
 
 #specify y
 y <- train_num$all_liquor_violations
@@ -1172,12 +1173,12 @@ lc_df_clean <- lc_df_filtered[-1]
 
 #lc_df_clean
 
-lc_table_df <- data.frame(
-  Variable = c("Institution Size", "Sex Offenses (all campus)", "Arson (all campus)", "Rape (student housing)", "Fondling (student housing)", "Robbery (student housing)", "Assault (student housing)", "Burglary (student housing)", "Vehicle Theft (student housing)", "Arson (student housing)", "Assault (criminal offense, noncampus)", "Vehicle Theft (criminal offense, noncampus)", "Arson (criminal offense, noncampus)", "Sex Offenses (criminal offense, public)", "Fondling (criminal offense, public)", "Drug Law Violations (arrest, student housing)", "Drug Law Violations (arrest, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
-  Coefficients = lc_df_clean)
+##lc_table_df <- data.frame(
+  #Variable = c("Institution Size", "Sex Offenses (all campus)", "Arson (all campus)", "Rape (student housing)", "Fondling (student housing)", "Robbery (student housing)", "Assault (student housing)", "Burglary (student housing)", "Vehicle Theft (student housing)", "Arson (student housing)", "Assault (criminal offense, noncampus)", "Vehicle Theft (criminal offense, noncampus)", "Arson (criminal offense, noncampus)", "Sex Offenses (criminal offense, public)", "Fondling (criminal offense, public)", "Drug Law Violations (arrest, student housing)", "Drug Law Violations (arrest, noncampus)", "Drug Law Violations (disciplinary, campus)", "Drug Law Violations (disciplinary, housing)"),
+  #Coefficients = lc_df_clean)
 
 #table of lasso coefficients
-knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
+#knitr::kable(lc_table_df, caption = "LASSO Coefficients", digits = 3)
 
 # # # # # #
 ## Fit NNs
