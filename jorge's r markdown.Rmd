@@ -6,14 +6,15 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(ggplot2)
 library(knitr)
 library(tidyr)
 library(tidyverse)
-install.packages("ggdendro")
 library(ggdendro)
+library(factoextra)
+library(gridExtra)
+library(Metrics)
 ```
 
 # Getting all of the data to join into one. 
@@ -94,7 +95,7 @@ dataset <- data1 |> left_join(data2) |>
 ```
 
 
-```{r}
+```{r, cache=TRUE}
 #remove NAs
 dataset[is.na(dataset)] <- 0
 
@@ -102,14 +103,80 @@ dataset[is.na(dataset)] <- 0
 #(3/4/24) just fixed some problems w this
 
 cols_to_remove <- c("Unitid_student_housing", "Institution.name_student_housing", "OPEID_student_housing", "Campus.ID_student_housing", "Campus.Name_student_housing", "Institution.Size_student_housing", "Unitid_crim_offense_noncampus", "Institution.name_crim_offense_noncampus", "OPEID_crim_offense_noncampus", "Campus.ID_crim_offense_noncampus", "Campus.Name_crim_offense_noncampus", "Institution.Size_crim_offense_noncampus", "Unitid_crim_offense_public", "Institution.name_crim_offense_public", "OPEID_crim_offense_public", "Campus.ID_crim_offense_public", "Campus.Name_crim_offense_public", "Institution.Size_crim_offense_public", "Unitid_arrests_campus", "Institution.name_arrests_campus", "OPEID_arrests_campus", "Campus.ID_arrests_campus", "Campus.Name_arrests_campus", "Institution.Size_arrests_campus", "Unitid_arrests_stuhousing", "Institution.name_arrests_stuhousing", "OPEID_arrests_stuhousing", "Campus.ID_arrests_stuhousing", "Campus.Name_arrests_stuhousing", "Institution.Size_arrests_stuhousing", "Unitid_arrests_noncampus", "Institution.name_arrests_noncampus", "OPEID_arrests_noncampus", "Campus.ID_arrests_noncampus", "Campus.Name_arrests_noncampus", "Institution.Size_arrests_noncampus", "Unitid_arrests_public", "Institution.name_arrests_public", "OPEID_arrests_public", "Campus.ID_arrests_public", "Campus.Name_arrests_public", "Institution.Size_arrests_public", "Unitid_disciplinary_campus", "Institution.name_disciplinary_campus", "OPEID_disciplinary_campus", "Campus.ID_disciplinary_campus", "Campus.Name_disciplinary_campus", "Institution.Size_disciplinary_campus", "Unitid_disciplinary_noncampus", "Institution.name_disciplinary_noncampus", "OPEID_disciplinary_noncampus", "Campus.ID_disciplinary_noncampus", "Campus.Name_disciplinary_noncampus", "Institution.Size_disciplinary_noncampus", "Unitid_disciplinary_public", "Institution.name_disciplinary_public", "OPEID_disciplinary_public", "Campus.ID_disciplinary_public", "Campus.Name_disciplinary_public", "Institution.Size_disciplinary_public", "Unitid_disciplinary_housing", "Institution.name_disciplinary_housing", "OPEID_disciplinary_housing", "Campus.ID_disciplinary_housing", "Campus.Name_disciplinary_housing", "Institution.Size_disciplinary_housing")
-cleaned_data <- dataset[, !names(dataset) %in% cols_to_remove]
+
+
+## had to change this dataset name before removing the campuses ##
+
+cleaned <- dataset[, !names(dataset) %in% cols_to_remove]
 ```
 
 
+## remove campuses
+
+Removes campuses outside of Colorado.
+
 ```{r}
+
+to_remove1 <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport")
+
+#check vector length
+#length(to_remove1)
+
+matches <- unique(grep(paste(to_remove1,collapse="|"), 
+                        cleaned$Campus.Name_all_campus, value=TRUE))
+cleaned_1 <- cleaned |> filter(!Campus.Name_all_campus %in% matches)
+
+to_remove2 <- c("Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast) Metropolitan Campus", "Fort Sill", "Vance", "Westport Plaza", "Lackland Air Force Base", "Columbia", "Coast Guard", "Merrit Island", "Vandenberg AFB")
+
+#length(to_remove2)
+
+matches <- unique(grep(paste(to_remove2,collapse="|"), 
+                        cleaned_1$Campus.Name_all_campus, value=TRUE))
+cleaned_2 <- cleaned_1 |> filter(!Campus.Name_all_campus %in% matches)
+
+to_remove3 <- c("Webster University St. Louis-Main Campus", "Space Coast", "Fort Worth", "San Francisco", "Cincinnati", "Oceana", "Holloman", "Columbia Metropolitan Campus", "Melbourne Campus", "Columbus AFB- MS", "Rockford", "Columbia College @ Ft. Sill", "Schriever", "Great Lakes Naval", "Keesler", "Columbia College @ Ft. Stewart", "Coast Guard Air Station (Clearwater)", "Camp Smith", "Whiteman Air Force Base", "Sarasota Metropolitan Campus", "Barbers Point- HI", "Vendenberg AFB", "Whiting Field", "Geneva", "Sand Island- HI", "Concorde Career College", "Irvine Metropolitan", "Valley Campus", "Hill Air Force Base", "Redstone Arsenal", "Laughlin", "NS Guantanamo Bay", "Fort Sill", "Ozark Metropolitan Campus", "NS Mayport", " Fort Rucker", "New River (MCAS)", "Landover Site", "Columbia College @ Elgin", "International Salon and Spa Academy", "Nalanda Campus", "Colubia College @Mesquite", "Great Lakes Naval", "Delaware", "Columbia Metropolitan Campus", "Quantico", "Columbia College @ Salt Lake City", "Bolling Air Force Base", "Mesquite", "Dallas/Fort Worth", "Osan", "Randolph Air Force Base", "Newark Campus", "Springfield", "Southern Maryland Higher Education Center (SMHEC)", "Fort Leonard Wood", "Columbia College Kings Bay", "Vienna", "Freeport", "Wright Patterson", "Irvine", "Columbia College (Main Campus) @ Columbia", "Ft. Stewart", "Washington- D.C.", "Joint Base Myer/Henderson Hall", "Tulsa", "Bangkok", "Nashville", "Hohenfels", "Athens", "New River", "Misawa", "Columbia College Imperial", "PCC Bayfield Site", "Iwanuki", "Asbury Theological Seminary - Tulsa - OK Instructional Site", "Grefenwoehr", "Webster University St. Louis-Main Campus", "Vilseck", "Arkansas", "New River", "Maryland")
+
+#length(to_remove3)
+
+matches <- unique(grep(paste(to_remove3,collapse="|"), 
+                        cleaned_2$Campus.Name_all_campus, value=TRUE))
+cleaned_data <- cleaned_2 |> filter(!Campus.Name_all_campus %in% matches)
+
+
+# take a look
+#head(cleaned_data)
+
+```
+
+```{r, cache=TRUE}
+
+#new column combining liquor law violations across disciplinary, arrests and location (public, stuhousing, campus, noncampus)
 cleaned_data$all_liquor_violations <- cleaned_data$Liquor.law.violations_arrests_campus + cleaned_data$Liquor.law.violations_arrests_noncampus + cleaned_data$Liquor.law.violations_arrests_public + cleaned_data$Liquor.law.violations_arrests_stuhousing + cleaned_data$Liquor.law.violations_disciplinary_campus + cleaned_data$Liquor.law.violations_disciplinary_housing + cleaned_data$Liquor.law.violations_disciplinary_noncampus + cleaned_data$Liquor.law.violations_disciplinary_public
 
 numeric_data <- select(cleaned_data, where(is.numeric))
+
+# figure margins too large
+#pairs(numeric_data)
+
+ggplot(cleaned_data, aes(y=Institution.Size_all_campus, x=all_liquor_violations)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+#cleaned_data$all_liquor_violations[16]
+
+year_factor <- as.factor(cleaned_data$Survey.year)
+
+#ggplot(cleaned_data, aes(x=year_factor, y=all_liquor_violations)) + 
+ # geom_bar(stat= "identity", aes(fill=year_factor)) +
+  #xlab("Year") +
+  #ylab("Liquor Law Violations") +
+  #ggtitle("Barplot of Total Liquor Violations v. Year")
+
+ggplot(cleaned_data, aes(x = year_factor, y = all_liquor_violations, fill = year_factor)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Year", y = "Liquor Law Violations", fill = "Year") +
+  ggtitle("Barplot of Total Liquor Violations vs. Year") +
+  theme(legend.position = "none")
 ```
 
 
@@ -128,18 +195,24 @@ mean(cleaned_data$Motor.vehicle.theft_all_campus)
 mean(cleaned_data$Arson_all_campus)
 ```
 
+
+
 ```{r}
+library(dplyr)
+library(knitr)
+
+# Sample data creation (assuming 'cleaned' is your data frame)
 means <- round(c(mean(cleaned_data$Negligent.manslaughter_all_campus),
-           mean(cleaned_data$Sex.offenses...Forcible_all_campus),
-           mean(cleaned_data$Rape_all_campus),
-           mean(cleaned_data$Fondling_all_campus),
-           mean(cleaned_data$Sex.offenses...Non.forcible_all_campus),
-           mean(cleaned_data$Incest_all_campus),
-           mean(cleaned_data$Statutory.rape_all_campus),
-           mean(cleaned_data$Robbery_all_campus),
-           mean(cleaned_data$Burglary_all_campus),
-           mean(cleaned_data$Motor.vehicle.theft_all_campus),
-           mean(cleaned_data$Arson_all_campus)), 3)
+                 mean(cleaned_data$Sex.offenses...Forcible_all_campus),
+                 mean(cleaned_data$Rape_all_campus),
+                 mean(cleaned_data$Fondling_all_campus),
+                 mean(cleaned_data$Sex.offenses...Non.forcible_all_campus),
+                 mean(cleaned_data$Incest_all_campus),
+                 mean(cleaned_data$Statutory.rape_all_campus),
+                 mean(cleaned_data$Robbery_all_campus),
+                 mean(cleaned_data$Burglary_all_campus),
+                 mean(cleaned_data$Motor.vehicle.theft_all_campus),
+                 mean(cleaned_data$Arson_all_campus)), 3)
 
 sds <- round(c(
   sd(cleaned_data$Negligent.manslaughter_all_campus),
@@ -155,23 +228,30 @@ sds <- round(c(
   sd(cleaned_data$Arson_all_campus)
 ), 3)
 
+# Creating data frame
 summary_df <- data.frame(
   Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
-               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
-               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
-               "Arson"),
+                "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+                "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+                "Arson"),
   Mean = means,
   StandardDeviation = sds
 )
 
+# Sorting the data frame by Mean in descending order
+sorted_summary_df <- summary_df %>%
+  arrange(desc(Mean), desc(StandardDeviation))
 
-knitr::kable(summary_df, caption = "Average Values of Different Campus Offenses",
+# Creating the kable
+knitr::kable(sorted_summary_df, caption = "Average Values of Different Campus Offenses",
              col.names = c("Variables", "Average", "Standard Deviation"))
 
 ```
 
 
-# More tests
+
+# EDA, Jorge's Part
+
 ```{r}
 #test <- cleaned_data |> mutate(liquor_violations_capita = Liquor.law.violations_disciplinary_campus/1e3) |> select(Institution.name_all_campus, liquor_violations_capita)
 #cleaned_data |> filter(Liquor.law.violations_disciplinary_campus > 25) |> group_by(Institution.name_all_campus) |> 
@@ -188,39 +268,116 @@ cleaned_data |> filter(all_liquor_violations > 1000) |>
 ```
 
 
-```{r}
-smp_size <- floor(0.75 * nrow(cleaned_data))
 
-# Set seed for reproducibility
+```{r, cache=TRUE}
 set.seed(4242)
+
+## split cleaned data into 25/75
+smp_size <- floor(0.75 * nrow(cleaned_data))
 
 train_split <- sample(seq_len(nrow(cleaned_data)), size = smp_size)
 
+# create train = 75% and test = 25% set
 train <- cleaned_data[train_split,] |> as_tibble() |> mutate(train = TRUE)
 test <- cleaned_data[-train_split,] |> as_tibble() |> mutate(train = FALSE)
+
+
+## check split to ensure nothing got screwed up
+
+# create df of training data means and sd of each column
 train_means_sd <- sapply(train[,c(7:20, 22:86)], 
                          function(x) c(mean(x, na.rm = TRUE), 
                                        sd(x, na.rm=TRUE)),
                          simplify = FALSE) |> bind_rows()
+# transpose so table is legible
 ttrain_means_sd <- t(train_means_sd)
+# create kable table
+#knitr::kable(ttrain_means_sd, digits = 5, caption = "Training Data, metrics to compare to test", col.names = c("Columns", "Mean", "SD"))
 
-knitr::kable(ttrain_means_sd, digits = 5)
-#knitr::kable(train_means_sd)
-
+# create df of testing data means and sd of each column
 test_means_sd <- sapply(test[,c(7:20, 22:86)], 
                          function(x) c(mean(x, na.rm = TRUE), 
                                        sd(x, na.rm=TRUE)),
                          simplify = FALSE) |> bind_rows()
-
 ttest_means_sd <- t(test_means_sd)
-knitr::kable(ttest_means_sd, digits = 5)
-
-#knitr::kable(list(ttrain_means_sd, ttest_means_sd), caption = "Tables Side by Side") %>%
- # kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+#knitr::kable(ttest_means_sd, digits = 5, caption = "Test Data, metrics to compare to training", col.names = c("Columns", "Mean", "SD"))
 
 
-#sapply(train[7:86], function(x) is.numeric(x), simplify = FALSE)
-#full_set <- train |> rbind(test)
+## kable tables for hw 5
+
+train_means <- round(c(mean(train$Negligent.manslaughter_all_campus),
+           mean(train$Sex.offenses...Forcible_all_campus),
+           mean(train$Rape_all_campus),
+           mean(train$Fondling_all_campus),
+           mean(train$Sex.offenses...Non.forcible_all_campus),
+           mean(train$Incest_all_campus),
+           mean(train$Statutory.rape_all_campus),
+           mean(train$Robbery_all_campus),
+           mean(train$Burglary_all_campus),
+           mean(train$Motor.vehicle.theft_all_campus),
+           mean(train$Arson_all_campus)), 3)
+
+train_sds <- round(c(
+  sd(train$Negligent.manslaughter_all_campus),
+  sd(train$Sex.offenses...Forcible_all_campus),
+  sd(train$Rape_all_campus),
+  sd(train$Fondling_all_campus),
+  sd(train$Sex.offenses...Non.forcible_all_campus),
+  sd(train$Incest_all_campus),
+  sd(train$Statutory.rape_all_campus),
+  sd(train$Robbery_all_campus),
+  sd(train$Burglary_all_campus),
+  sd(train$Motor.vehicle.theft_all_campus),
+  sd(train$Arson_all_campus)
+), 3)
+
+train_pres <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+               "Arson"),
+  Mean = train_means,
+  StandardDeviation = train_sds
+)
+
+knitr::kable(train_pres, caption = "Training Data", col.names = c("Variable", "Mean", "SD"))
+
+test_means <- round(c(mean(test$Negligent.manslaughter_all_campus),
+           mean(test$Sex.offenses...Forcible_all_campus),
+           mean(test$Rape_all_campus),
+           mean(test$Fondling_all_campus),
+           mean(test$Sex.offenses...Non.forcible_all_campus),
+           mean(test$Incest_all_campus),
+           mean(test$Statutory.rape_all_campus),
+           mean(test$Robbery_all_campus),
+           mean(test$Burglary_all_campus),
+           mean(test$Motor.vehicle.theft_all_campus),
+           mean(test$Arson_all_campus)), 3)
+
+test_sds <- round(c(
+  sd(test$Negligent.manslaughter_all_campus),
+  sd(test$Sex.offenses...Forcible_all_campus),
+  sd(test$Rape_all_campus),
+  sd(test$Fondling_all_campus),
+  sd(test$Sex.offenses...Non.forcible_all_campus),
+  sd(test$Incest_all_campus),
+  sd(test$Statutory.rape_all_campus),
+  sd(test$Robbery_all_campus),
+  sd(test$Burglary_all_campus),
+  sd(test$Motor.vehicle.theft_all_campus),
+  sd(test$Arson_all_campus)
+), 3)
+
+test_pres <- data.frame(
+  Variable  = c("Negligent Manslaughter", "Sex Offenses (Forcible)", "Rape",
+               "Fondling", "Sex Offenses (Non-forcible)", "Incest",
+               "Statutory Rape", "Robbery", "Burglary", "Motor Vehicle Theft",
+               "Arson"),
+  Mean = test_means,
+  StandardDeviation = test_sds
+)
+
+knitr::kable(test_pres, caption = "Test Data", col.names = c("Variable", "Mean", "SD"))
 ```
 
 # Clustering method
@@ -294,7 +451,7 @@ km.out
 ```
 
 ## Plotting optimal number of clusters
-```{r}
+```{r, cache=TRUE}
 nclust <- 10
 wss <- numeric(nclust)
 set.seed(421)
@@ -313,7 +470,7 @@ sc_plot <- ggplot(wss_df, aes(x = clusters, y = wss, group = 1)) +
   scale_y_continuous(labels = scales::comma) +
   xlab("Number of Clusters") +
   ylab("Within Cluster Sum of Squares") +
-  ggtitle("Optimal Number of Clusters")
+  ggtitle("Optimal Number of Clusters, Scree Plot")
 sc_plot +
   geom_hline(
     yintercept = wss,
@@ -325,7 +482,7 @@ sc_plot +
 
 
 ## Now plotting with the optimal number of clusters
-```{r}
+```{r, cache=TRUE}
 k <- 5
 
 set.seed(421)
@@ -341,13 +498,28 @@ ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color 
 ```
 
 
-## Now clustering using survey year as our predictor. 
+```{r}
+idx <- which(km.out$cluster == 5)
+train[idx,]$Institution.name_all_campus
 
+```
 
 ```{r}
-alc_2cols2 <- train_num[ , c("all_liquor_violations", "Survey.year")]
+idx <- km.out$cluster
+idx <- which(km.out$cluster == 5)
+train[idx,]
+train[idx,]$Institution.name_all_campus
+```
+
+
+
+## Now clustering with 2 predictors. 
+
+
+```{r, cache=TRUE}
+alc_2cols2 <- train_num[ , c("all_liquor_violations", "Survey.year", "Institution.Size_all_campus")]
 set.seed(421)
-km.out2 <- kmeans(alc_2cols1, centers = 3, nstart = 20)
+km.out2 <- kmeans(alc_2cols2, centers = 3, nstart = 20)
 km.out2
 
 nclust <- 10
@@ -381,27 +553,129 @@ k <- 5
 set.seed(421)
 km.out2 <- kmeans(alc_2cols2, centers = k, nstart = 20)
 
-train_num$cluster_id <- factor(km.out2$cluster)
-ggplot(train_num, aes(Survey.year, all_liquor_violations, color = cluster_id)) +
+train_num$cluster_id2 <- factor(km.out2$cluster)
+p1 <- ggplot(train_num, aes(Survey.year, all_liquor_violations, color = cluster_id2)) +
     geom_point(alpha = 0.40) +
-    xlab("Institution Size (Number of Students Enrolled)") +
+    xlab("Survey Year") +
     ylab("Liquor Violations") +
   ggtitle("Plot of Clustered Liquor Law Violations by Survey Year") +
   labs(color = "Cluster #")
+
+
+train_num$cluster_id2 <- factor(km.out2$cluster)
+p2 <- ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color = cluster_id2)) +
+    geom_point(alpha = 0.40) +
+    xlab("Institution Size (Number of Students Enrolled)") +
+    ylab("Liquor Violations") +
+  ggtitle("Plot of Clustered Liquor Law Violations by Size of Institution") +
+  labs(color = "Cluster #")
+p1 
+p2
+
+#grid.arrange(p1, p2, ncol = 2)
 ```
 
 
-TIME TO REMOVE ROWS FOR DIFFERENT CAMPUSES!
+### Clustering with our new dataset 
+
+```{r, cache=TRUE}
+alc_2cols1 <- train[ , c("all_liquor_violations", "Institution.Size_all_campus")]
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = 3, nstart = 20)
+km.out
+
+nclust <- 10
+wss <- numeric(nclust)
+set.seed(421)
+## Looping through different number of clusters 
+for (i in 1:nclust) {
+  km.out <- kmeans(alc_2cols1, centers = i, nstart = 20)
+  wss[i] <- km.out$tot.withinss
+}
+
+## Plotting 
+wss_df <- tibble(clusters = 1:nclust, wss = wss)
+sc_plot <- ggplot(wss_df, aes(x = clusters, y = wss, group = 1)) +
+  geom_point(size = 3) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2, 4, 6, 8, 10)) +
+  scale_y_continuous(labels = scales::comma) +
+  xlab("Number of Clusters") +
+  ylab("Within Cluster Sum of Squares") +
+  ggtitle("Optimal Number of Clusters")
+sc_plot +
+  geom_hline(
+    yintercept = wss,
+    linetype = 'dashed',
+    col = c(rep('black',4),'red', rep('black', 5))
+  )
+
+k <- 5
+
+set.seed(421)
+km.out <- kmeans(alc_2cols1, centers = k, nstart = 20)
+
+train_num$cluster_id <- factor(km.out$cluster)
+ggplot(train_num, aes(Institution.Size_all_campus, all_liquor_violations, color = cluster_id)) +
+    geom_point(alpha = 0.40) +
+    xlab("Institution Size (Number of Students Enrolled)") +
+    ylab("Liquor Violations") +
+  ggtitle("Plot of Clustered Liquor Law Violations by Institution Size") +
+  labs(color = "Cluster #")
+
+```
+
+
+
+
+## Most Recent Attempt 
 
 ```{r}
-to_remove <- c("Jacksonville", "San Diego", "Memphis", "Dunnam", "Ft. Drum", "San Luis Obispo", "Syracuse", "Whidbey", "Marysville", "Crystal Lake", "Waynesville", "Ft. Still", "Patrick AFB", "Los Alamitos", "Rolla", "Jefferson City", "Navy College Office", "Ft. Leonard Wood", "Coast Guard Island", "NAS Ft Worth JRB", "Lake County", "Lake of the Ozarks", "NS Great Lakes", "Hunter Army", "Orlando", "Amarillo Texas", "Sky Harbor", "Fort Benning", "Greenville", "Kaneohe", "Pheonix-Mesa", "Patuxent River", "El Paso", "Langley", "Shaw", "Sheppard", "Mildenhall", "Spangdahlem", "Pensacola", "Minot", "San Antonio", "Fort Eustis", "Europe", "Dyess", "Beaufort", "Los Angeles", "Fort Walton Beach", "Rota", "Mobile", "Huntsville", "Everett", "MacDill", "North Island", "Houston", "Charleston", "Ghana", "Atlanta", "Fort Jackson", "Corpus Christi", "Honolulu", "St. Petersburg", "Tampa Bay", "Anchorage", "Seattle", "Camp Pendleton", "Space Coast Perimeter", "Fort Huachuca", "Jefferson City", "Inland Empire", "McConnell", "Lemoore", "Crestview", "New Orleans", "Camp Humphreys", "Fort Leavenworth", "Chicago", "Little Rock", "Geilenkirchen", "Fort Lauderdale", "Davis-Monthan", "Ramstein", "Mountain Home", "Connecticut", "Kadena", "Tyndall", "Philadelphia", "Barksdale", "Travis", "Ft Worth", "Leiden", "Clearfield", "Luke", "Miami", "Fort Bliss", "Tacoma", "Lakeland", "North Charleston", "Oceanside", "Myrtle Beach", "Fort Bragg", "Yokosuka", "Northwest Kansas", "Atsugi", "DFW", "Futenma", "Offutt", "Ventura", "Aviano", "Clovis", "Kansas City", "Las Vegas", "Tinker Air Force Base", "Greenville Metropolitan Campus", "Robins", "Riverside Airport", "Albuquerque", "Wiesbaden", "Beale", "Gateway", "Ocala Metropolitan Campus", "Baton Rouge", "Schofield Barracks", "Portland", "Hartford", "Hunter Airfield Education", "Hurlburt Field", "Los Angeles Air Force Base", "Savannah Area", "Columbia College (Main Campus) @ Columbia", "Columbia College @ NS Great Lakes", "Lakenheath", "Sigonella", "Spokane", "Yokota", "Northern Utah", "Louisville", "Norfolk", "Fort Gordon", " Shaw Air Force Base", "Andrews Air Force Base", "Fort Belvoir", "Greensboro", "Moody", "China Lake", "McConnell Air Force Base", "McGuire", "Ft. Sill", "Geneva", "Fairchild Air Force Base", "Wesport Plaza", "NS Mayport", "Andrews", "St. Louis", "Fort Smith", "Melbourne", "Lackland Air Force base", "Phoenix-Mesa", "Fort Worth", "Afghanistan", "Rockford", "Katterbach", "Vienna", "Ellsworth", "Mather", "Webster University at Elgin", "Great Lakes Naval", "Trinidad Campus", "Cheyenne Campus", "Great Falls", "Fort Sill", "Moberly Area Community College", "Edwards Air Force Base", "Asbury Theological Seminary", "Fort Campbell", "Lincoln College of Technology", "Winghaven Campus", "Cha-Am/Hua-Hin", "Freeport", "Tallahassee", "Patrick Air Force Base", "Ft. Stewart", "San Francisco", "Scott Air Force Base", "Camp Lejeune", "Fallon", "Altus", "Indianapolis", "Oceana", "Northwest Arkansas (Rogers) Metropolitan Campus", "Seymour Johnson", "Cheyenne", "Kuwait", "Victorville", "Salt Lake City", "Incirlik", "Whiteman Air Force Base", "Tucson", "Tampa", "Elgin", "Oklahoma City", "Elizabeth City", "Dayton Area", "Columbia College @ St. Louis", "Palmdale", "Lajes Field", "Sand Island - HI", "Merrit Island (Space Coast Metropolitan Campus", "Fort Sill", "Vance", "Webster University St. Louis-Main Campus", "Space Coast", "Fort Worth", "San Francisco", "Cincinnati", "Oceana", "Holloman", "Columbia Metropolitan Campus", "Melbourne Campus", "Columbus AFB- MS", "Rockford", "Columbia College @ Ft. Sill", "Schriever", "Great Lakes Naval", "Keesler", "Columbia College @ Ft. Stewart", "Coast Guard Air Station (Clearwater)", "Camp Smith", "Whiteman Air Force Base", "Sarasota Metropolitan Campus", "Barbers Point- HI", "Vendenberg AFB", "Whiting Field", "Geneva", "Sand Island- HI", "Concorde Career College", "Irvine Metropolitan", "Valley Campus", "Hill Air Force Base", "Redstone Arsenal", "Laughlin", "NS Guantanamo Bay", "Fort Sill", "Ozark Metropolitan Campus", "NS Mayport", " Fort Rucker", "New River (MCAS)", "Landover Site", "Columbia College @ Elgin", "International Salon and Spa Academy", "Nalanda Campus", "Colubia College @Mesquite", "Great Lakes Naval", "Delaware", "Columbia Metropolitan Campus", "Quantico", "Columbia College @ Salt Lake City", "Bolling Air Force Base", "Mesquite", "Dallas/Fort Worth", "Osan", "Randolph Air Force Base", "Newark Campus", "Springfield", "Southern Maryland Higher Education Center (SMHEC)", "Fort Leonard Wood", "Columbia College Kings Bay", "Vienna", "Freeport", "Wright Patterson", "Irvine", "Columbia College (Main Campus) @ Columbia", "Ft. Stewart", "Washington- D.C.", "Joint Base Myer/Henderson Hall", "Tulsa", "Bangkok", "Nashville", "Hohenfels", "Athens", "New River", "Misawa", "Columbia College Imperial", "PCC Bayfield Site", "Iwanuki", "Asbury Theological Seminary - Tulsa - OK Instructional Site", "Grefenwoehr", "Webster University St. Louis-Main Campus", "Vilseck")
-matches <- unique(grep(paste(to_remove,collapse="|"), 
-                        train$Campus.Name_all_campus, value=TRUE))
-new_train <- train |> filter(!Campus.Name_all_campus %in% matches)
+library(cluster)
+test_num <- test |> as_tibble() |> select(-where(is.character))
+test_num <- test_num[, !names(test_num) %in% c('Unitid_all_campus', 'OPEID_all_campus', 'Campus.ID_all_campus')]
+cols_test <- train_num[ , c("all_liquor_violations", "Survey.year", "Institution.Size_all_campus")]
+
+kmTEST <- kmeans(cols_test, centers = k, nstart = 20)
+
+sil <- silhouette(kmTEST$cluster, dist(train_num))
+library(dplyr)
+data_frame <- data.frame(sil_width = sil[, "sil_width"],
+                         cluster = sil[, "cluster"])
+avg_sil_scores_by_cluster <- data_frame %>%
+  group_by(cluster) %>%
+  summarise(avg_silhouette = mean(sil_width))
+print(avg_sil_scores_by_cluster)
+kable(avg_sil_scores_by_cluster, format = "markdown", 
+      col.names =c("Cluster", "Average Silhouette Score"),
+        caption = "Average Silhouette Scores by Cluster")
 ```
 
+x
+```{r}
+ggplot(data_frame, aes(x = factor(cluster), y = sil_width, fill = factor(cluster))) +
+  geom_boxplot() +
+  labs(x = "Cluster", y = "Silhouette Width") +
+  theme_minimal()
+```
+
+```{r}
+plot(sil, col = 1:5, border = NA)
+```
+
+# 3D Plot !!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
 
+```{r}
+#library(plotly)
+
+#fig <- plot_ly(train_num, x = ~Institution.Size_all_campus, y = ~Survey.year, z = ~all_liquor_violations, type = 'scatter3d', mode = 'markers', color = ~cluster_id2)
+#fig <- fig %>% layout(title = "Cluster Plot of Institution Size and Survey Year",
+          #            scene = list(xaxis = list(title = "Institution Size"),
+           #                        yaxis = list(title = "Survey Year"),
+            #                       zaxis = list(title = "Liquor Law Violations")))
+#fig
+```
 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
